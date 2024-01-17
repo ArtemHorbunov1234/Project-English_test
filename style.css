@@ -1,5 +1,5 @@
 body {
-    background-image: url('7528734.jpg');
+    background-image: url('img/7528734.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -35,11 +35,12 @@ body {
     border-radius: 12px;
     color: white;
 }
-.container > h2 > .container__english {
+
+#border {
     background-color: rgb(134 133 169 / 66%);
-    border-radius: 5px;
-    border-radius: 9px;
     padding: 1px;
+
+    border-radius: 5px;
 }
 .container__button {
     font-family: 'Open Sans', sans-serif;
@@ -56,6 +57,18 @@ body {
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
+}
+
+.container__header {
+    display: flex;
+    gap: 5px;
+}
+
+#change_img {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    margin-top: 41px;
 }
 
 .container__button:active {
