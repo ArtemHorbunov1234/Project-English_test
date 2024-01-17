@@ -5,6 +5,12 @@ body {
     background-repeat: no-repeat;
     font-family: Arial, sans-serif;
 }
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 .window--color {
     margin-top: 16rem;
     padding: 1.4rem 5rem 4rem 5rem;
@@ -28,6 +34,11 @@ body {
     height: 32px;
 }
 
+#language {
+    cursor: pointer;
+    user-select: none;
+}
+
 .container__text {
     margin-top: 30px;
     border: 1px solid gray;
@@ -36,10 +47,9 @@ body {
     color: white;
 }
 
-#border {
+.border {
     background-color: rgb(134 133 169 / 66%);
     padding: 1px;
-
     border-radius: 5px;
 }
 .container__button {
@@ -59,7 +69,7 @@ body {
     touch-action: manipulation;
 }
 
-.container__header {
+.header {
     display: flex;
     gap: 5px;
 }
