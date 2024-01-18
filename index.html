@@ -10,17 +10,28 @@
 
     <body>
         <div class="window--color">
-            <div class="container">
-                <h2 id="language">
-                    <span id="container__english" class="border">English</span> /
-                    <span id="container__ukr" class="">Ukr</span>
-                </h2>
-                <div class="header">
-                    <h1 id="taskText" class="container__text">Text</h1>
+            <button id="btn">Go</button>
+
+            <div class="container" id="active_display">
+                <div class="container__navigation">
+                    <h1 id="normal_mode"><span id="replacement">Normal</span> mode</h1>
+                    <div id="icon">
+                        <h2 id="icon_normal">Normal</h2>
+                        <h2 id="icon_hard">Hard</h2>
+                    </div>
+                    <h2 id="language">
+                        <span id="language__english" class="border">English</span> /
+                        <span id="language__ukr" class="">Ukr</span>
+                    </h2>
+                    <b id="count__correct">0</b>
+                </div>
+                <hr />
+                <div class="container__header">
+                    <h1 id="taskText">Text</h1>
                     <img id="change_img" src="img/free-icon-alter-5266493.png" alt="" />
                 </div>
                 <input type="text" id="myInput" value="" />
-                <button class="container__button" id="btn">Push</button>
+                <button id="container_btn">Push</button>
             </div>
         </div>
     </body>
