@@ -1,3 +1,4 @@
+import { value } from './dataFetcher.js';
 const valueInput = document.getElementById('myInput');
 const btnPush = document.getElementById('container_btn');
 const text = document.getElementById('taskText');
@@ -5,7 +6,8 @@ const imgAmendText = document.getElementById('change_img');
 const controlLanguage = document.getElementById('language');
 const english = document.getElementById('language__english');
 const ukraine = document.getElementById('language__ukr');
-const countCorrect = document.getElementById('count__correct');
+const countBad = document.getElementById('count__bab');
+const countGood = document.getElementById('count__good');
 const btn = document.getElementById('btn');
 const display = document.getElementById('active_display');
 const iconActive = document.getElementById('normal_mode');
@@ -13,27 +15,12 @@ const icon = document.getElementById('icon');
 const replacement = document.getElementById('replacement');
 const iconNormal = document.getElementById('icon_normal');
 const iconHard = document.getElementById('icon_hard');
-let num = 0;
-let value;
+let numGood = 0;
+let numBad = 0;
 let state = false;
 let randomNumber;
 let iconSwitch = true;
 let visibility;
-fetch('https://6585c8f5022766bcb8c95bf4.mockapi.io/English', {
-    method: 'Get',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-})
-    .then((res) => {
-        return res.json();
-    })
-    .then((data) => {
-        value = data;
-    })
-    .catch((error) => {
-        console.error(error);
-    });
 
 btn.onclick = function () {
     btn.style.display = 'none';
@@ -68,19 +55,20 @@ imgAmendText.onclick = function () {
 
 btnPush.onclick = function () {
     if (state === true) {
-        if (valueInput.value === value[randomNumber].translation) alert('Good'), num++, (countCorrect.innerText = num);
+        if (valueInput.value === value[randomNumber].translation)
+            alert('Good'), numGood++, (countGood.innerText = numGood);
         else
             alert(`${valueInput.value}не правильный ответ. Правильный ответ: ${value[randomNumber].translation}  `),
-                (num = 0),
-                (countCorrect.innerText = num);
+                numBad++,
+                (countBad.innerText = numBad);
         randomNumber = randomInteger(1, 100);
         text.innerText = value[randomNumber].word;
     } else {
-        if (valueInput.value === value[randomNumber].word) alert('Good'), num++, (countCorrect.innerText = num);
+        if (valueInput.value === value[randomNumber].word) alert('Good'), numGood++, (countGood.innerText = numGood);
         else
             alert(`${valueInput.value}не правильный ответ. Правильный ответ: ${value[randomNumber].word} `),
-                (num = 0),
-                (countCorrect.innerText = num);
+                numBad++,
+                (countBad.innerText = numBad);
 
         randomNumber = randomInteger(1, 100);
 
