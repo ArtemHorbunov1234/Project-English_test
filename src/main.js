@@ -15,8 +15,10 @@ const icon = document.getElementById('icon');
 const replacement = document.getElementById('replacement');
 const iconNormal = document.getElementById('icon_normal');
 const iconHard = document.getElementById('icon_hard');
+const iconAdd = document.getElementById('icon_add');
 let numGood = 0;
 let numBad = 0;
+let nomination;
 let state = false;
 let randomNumber;
 let iconSwitch = true;
@@ -54,13 +56,35 @@ imgAmendText.onclick = function () {
 };
 
 btnPush.onclick = function () {
+    let liLast = document.createElement('li');
     if (state === true) {
-        if (valueInput.value === value[randomNumber].translation)
+        if (valueInput.value === value[randomNumber].translation) {
             alert('Good'), numGood++, (countGood.innerText = numGood);
-        else
+            nomination = numBad + numGood;
+
+            liLast.innerHTML = `
+        <img width="18px" style="margin-left: 14px" src="/img/good.png" alt="" />
+        <b id="icon_nomination">${nomination}.</b><span>${valueInput.value}</span>
+        <img width="20px" src="/img/icon-right-arrow.png" alt="" />
+        <span>${value[randomNumber].word}</span>
+        <img width="20px" src="/img/icon-equal-mathematical-sign.png" alt="" />
+        <span >${value[randomNumber].translation}</span>`;
+            iconAdd.appendChild(liLast);
+        } else {
             alert(`${valueInput.value}не правильный ответ. Правильный ответ: ${value[randomNumber].translation}  `),
                 numBad++,
                 (countBad.innerText = numBad);
+            nomination = numBad + numGood;
+
+            liLast.innerHTML = `
+                <img width="18px" style="margin-left: 14px" src="/img/bad.png" alt="" />
+                <b id="icon_nomination">${nomination}.</b><span>${valueInput.value}</span>
+                <img width="20px" src="/img/icon-right-arrow.png" alt="" />
+                <span>${value[randomNumber].translation}</span>
+                <img width="20px" src="/img/icon-equal-mathematical-sign.png" alt="" />
+                <span >${value[randomNumber].word}</span>`;
+            iconAdd.appendChild(liLast);
+        }
         randomNumber = randomInteger(1, 100);
         text.innerText = value[randomNumber].word;
     } else {

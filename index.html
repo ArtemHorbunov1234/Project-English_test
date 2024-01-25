@@ -30,19 +30,11 @@
                             <b id="count__bab">0</b>
                         </div>
                         <div>
-                            <button id="history">History</button>
+                            <button id="history_button">History</button>
                             <div id="history_icon">
-                                <div style="display: flex; flex-direction: column; gap: 10px">
-                                    <div style="display: flex; flex-direction: column; gap: 5px">
-                                        <div
-                                            style="
-                                                display: flex;
-                                                gap: 5px;
-                                                align-items: center;
-                                                cursor: pointer;
-                                                margin-inline: auto;
-                                            "
-                                        >
+                                <div>
+                                    <div class="history_icon--top">
+                                        <div class="history_icon__header">
                                             <h3>Статистика</h3>
                                             <img width="15px" height="15px" src="/img/icon-down-arrow.png" alt="" />
                                         </div>
@@ -59,7 +51,7 @@
                                         </div>
                                     </div>
                                     <h4>Відповіді</h4>
-                                    <div style="display: flex; gap: 10px; align-items: center">
+                                    <div class="history_icon--bottom">
                                         <div style="display: flex; gap: 5px">
                                             <img style="width: 17px" src="/img/good.png" alt="" />/
                                             <img style="width: 17px" src="/img/bad.png" alt="" />
@@ -71,11 +63,7 @@
                                             переклад</span
                                         >
                                     </div>
-                                    <div>
-                                        <li style="display: flex; gap: 10px">
-                                            <img width="20px" src="/img/good.png" alt="" /> <b>1.</b>
-                                        </li>
-                                    </div>
+                                    <div id="icon_add"></div>
                                 </div>
                             </div>
                         </div>
