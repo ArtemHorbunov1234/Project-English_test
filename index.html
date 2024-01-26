@@ -9,49 +9,52 @@
     </head>
 
     <body>
-        <div class="window--color">
-            <button id="btn">Start</button>
-            <div class="container" id="active_display">
+        <div class="window">
+            <button id="btnStart">Start</button>
+            <div class="container" id="activeDisplay">
                 <div class="container__navigation">
-                    <h1 id="normal_mode"><span id="replacement">Normal</span> mode</h1>
+                    <h1 id="mode"><span id="replacementMode">Normal</span> mode</h1>
                     <div id="icon">
-                        <h2 id="icon_normal">Normal</h2>
-                        <h2 id="icon_hard">Hard</h2>
+                        <h2 id="iconNormalMode">Normal</h2>
+                        <h2 id="iconHardMode">Hard</h2>
                     </div>
                     <h2 id="language">
-                        <span id="language__english" class="border">English</span> /
-                        <span id="language__ukr" class="">Ukr</span>
+                        <span id="languageEnglish" class="border">English</span> /
+                        <span id="languageUkr" class="">Ukr</span>
                     </h2>
                     <div class="counter">
                         <div class="counter__top">
-                            <img id="img_good" class="container__img" src="img/good.png" alt="" />
-                            <b id="count__good">0</b>
-                            <img id="img_bad" src="/img/bad.png" class="container__img" alt="" />
-                            <b id="count__bab">0</b>
+                            <img class="container__img" src="img/good.png" alt="" />
+                            <b id="countGoodReply">0</b>
+                            <img src="/img/bad.png" class="container__img" alt="" />
+                            <b id="countBabReply">0</b>
                         </div>
                         <div>
-                            <button id="history_button">History</button>
-                            <div id="history_icon">
+                            <button id="historyButton">History</button>
+                            <div id="historyIcon">
                                 <div>
-                                    <div class="history_icon--top">
-                                        <div class="history_icon__header">
+                                    <div class="history__icon__top">
+                                        <div class="history__icon__header">
                                             <h3>Статистика</h3>
                                             <img width="15px" height="15px" src="/img/icon-down-arrow.png" alt="" />
                                         </div>
 
                                         <div>
-                                            <h4>Середній коефіцієнт правильних відповідей: <b>4</b>%</h4>
+                                            <h4>
+                                                Середній коефіцієнт правильних відповідей:
+                                                <b id="iconMeanValue">4</b>%
+                                            </h4>
                                         </div>
                                         <div style="display: flex; align-items: flex-end">
                                             <h4>
                                                 Kombo: кількість послідовних відповідей
-                                                <b>4</b>
+                                                <b id="countCombo">0</b>
                                             </h4>
-                                            <img width="23px" height="20px" src="/img/free-icon-fire.png" alt="" />
+                                            <img width="23px" height="20px" src="/img/icon-fire.png" alt="" />
                                         </div>
                                     </div>
                                     <h4>Відповіді</h4>
-                                    <div class="history_icon--bottom">
+                                    <div class="history__icon__bottom">
                                         <div style="display: flex; gap: 5px">
                                             <img style="width: 17px" src="/img/good.png" alt="" />/
                                             <img style="width: 17px" src="/img/bad.png" alt="" />
@@ -63,7 +66,7 @@
                                             переклад</span
                                         >
                                     </div>
-                                    <div id="icon_add"></div>
+                                    <div id="iconAddTeg"></div>
                                 </div>
                             </div>
                         </div>
@@ -72,10 +75,10 @@
                 <hr />
                 <div class="container__main">
                     <h1 id="taskText">Text</h1>
-                    <img id="change_img" src="img/free-icon-alter-5266493.png" alt="" />
+                    <img id="changeImg" src="img/icon-alter.png" alt="" />
                 </div>
                 <input type="text" id="myInput" value="" />
-                <button id="container_btn">Push</button>
+                <button id="containerbtn">Push</button>
             </div>
         </div>
     </body>
