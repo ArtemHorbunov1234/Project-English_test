@@ -10,7 +10,7 @@
 
     <body>
         <div class="window">
-            <button id="btnStart">Start</button>
+            <button class="window--btn" id="btnStart">Start</button>
             <div class="container" id="activeDisplay">
                 <div class="container__navigation">
                     <h1 id="mode"><span id="replacementMode">Normal</span> mode</h1>
@@ -42,7 +42,7 @@
                                         <div>
                                             <h4>
                                                 Середній коефіцієнт правильних відповідей:
-                                                <b id="iconMeanValue">4</b>%
+                                                <b id="iconMeanValue">0</b>%
                                             </h4>
                                         </div>
                                         <div style="display: flex; align-items: flex-end">
@@ -54,7 +54,7 @@
                                         </div>
                                     </div>
                                     <h4>Відповіді</h4>
-                                    <div class="history__icon__bottom">
+                                    <div class="history__icon__main">
                                         <div style="display: flex; gap: 5px">
                                             <img style="width: 17px" src="/img/good.png" alt="" />/
                                             <img style="width: 17px" src="/img/bad.png" alt="" />
@@ -67,6 +67,9 @@
                                         >
                                     </div>
                                     <div id="iconAddTeg"></div>
+                                    <div class="history__icon__bottom">
+                                        <img width="25px" height="25px" src="/img/icon-btn_clear.png" alt="clear" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -78,7 +81,7 @@
                     <img id="changeImg" src="img/icon-alter.png" alt="" />
                 </div>
                 <input type="text" id="myInput" value="" />
-                <button id="containerbtn">Push</button>
+                <button class="window--btn" id="containerBtn">Push</button>
             </div>
         </div>
     </body>

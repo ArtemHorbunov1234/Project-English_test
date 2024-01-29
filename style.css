@@ -93,7 +93,8 @@ hr {
     padding: 1px;
     border-radius: 5px;
 }
-#btnStart {
+
+.window--btn {
     font-family: 'Open Sans', sans-serif;
     font-size: 1.7rem;
     letter-spacing: 2px;
@@ -108,24 +109,26 @@ hr {
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
+}
+
+#iconAddBtnClear {
+    font-size: 1rem;
+    border: 2px solid;
+    letter-spacing: 1.3px;
+    text-transform: none;
+
+    box-shadow: 0.6px 0.6px 0px 0px, 1.2px 1.2px 0px 0px, 1.5px 1.5px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px;
+    padding: 0.25em 0.2em;
+    margin-inline: auto;
+    width: fit-content;
+}
+
+#btnStart {
     margin-top: 5.5rem;
 }
 
-#containerbtn {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 16px;
-    letter-spacing: 2px;
-    text-decoration: none;
-    text-transform: uppercase;
-    color: #000;
-    cursor: pointer;
-    border: 3px solid;
-    padding: 0.25em 0.5em;
-    box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
-    position: relative;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
+#containerBtn {
+    font-size: 1rem;
 }
 
 .container__main {
@@ -146,7 +149,7 @@ hr {
     margin-top: 17px;
 }
 
-#containerbtn:active {
+#containerBtn:active {
     box-shadow: 0px 0px 0px 0px;
     top: 5px;
     left: 5px;
@@ -159,6 +162,12 @@ hr {
 }
 
 #historyButton:active {
+    box-shadow: 0px 0px 0px 0px;
+    top: 2px;
+    left: 2px;
+}
+
+#iconAddBtnClear:active {
     box-shadow: 0px 0px 0px 0px;
     top: 2px;
     left: 2px;
@@ -209,7 +218,7 @@ hr {
     gap: 5px;
 }
 
-#historyIcon > div > .history__icon__bottom {
+#historyIcon > div > .history__icon__main {
     display: flex;
     gap: 10px;
     align-items: center;
@@ -222,7 +231,7 @@ hr {
     margin-inline: auto;
 }
 
-.history__icon__bottom {
+.history__icon__main {
     display: flex;
     gap: 5px;
 }
@@ -243,6 +252,11 @@ hr {
     cursor: pointer;
     user-select: none;
     width: 90px;
+}
+.history__icon__bottom {
+    display: flex;
+    justify-content: flex-end;
+    cursor: pointer;
 }
 
 #icon {
@@ -269,7 +283,7 @@ hr {
 }
 
 @media (min-width: 768px) {
-    #containerbtn {
+    #containerBtn {
         padding: 0.25em 0.75em;
     }
 }
