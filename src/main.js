@@ -19,7 +19,11 @@ const iconAddTeg = document.getElementById('iconAddTeg');
 const historyIcon = document.getElementById('historyIcon');
 const historyButton = document.getElementById('historyButton');
 const iconMeanValue = document.getElementById('iconMeanValue');
+const historyIconWithoutData = document.querySelector('.history__icon__withoutData');
+const historyIconData = document.querySelector('.history__icon__data');
 const countCombo = document.getElementById('countCombo');
+const historyIconBtnClear = document.getElementById('historyIconBtnClear');
+const divElement = document.querySelector('#iconAddTeg');
 let state = false;
 let randomNumber;
 let iconModeSwitch = true;
@@ -37,6 +41,33 @@ countBad.innerHTML = savedNumBad;
 iconMeanValue.innerText = savedIconMeanValue;
 let numGood = Number(countGood.innerText);
 let numBad = Number(countBad.innerText);
+const historyIconHidden = () => {
+    const sumNum = numGood + numBad;
+    if (sumNum >= 1) {
+        historyIconWithoutData.style.display = 'none';
+        historyIconData.style.display = 'flex';
+    } else {
+        historyIconWithoutData.style.display = 'flex';
+        historyIconData.style.display = 'none';
+    }
+};
+historyIconHidden();
+
+historyIconBtnClear.onclick = function () {
+    localStorage.setItem('countCombo', 0);
+    localStorage.setItem('numGood', 0);
+    localStorage.setItem('numBad', 0);
+    countGood.innerHTML = 0;
+    countBad.innerHTML = 0;
+    countCombo.innerHTML = 0;
+
+    numGood = Number(countGood.innerText);
+    numBad = Number(countBad.innerText);
+
+    divElement.innerHTML = '';
+    historyIconWithoutData.style.display = 'flex';
+    historyIconData.style.display = 'none';
+};
 
 const tegLiLast = function (value_1, value_2, nomination, name) {
     const tegLi = `
@@ -174,6 +205,7 @@ btnStartPush.onclick = function () {
         randomNumber = randomInteger(1, 100);
         text.innerText = value[randomNumber].translation;
     }
+    historyIconHidden();
 
     valueInput.value = '';
 };

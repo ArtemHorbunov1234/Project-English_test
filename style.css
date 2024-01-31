@@ -190,19 +190,34 @@ hr {
     touch-action: manipulation;
 }
 
-#historyIcon {
-    display: none;
+.history__icon__withoutData {
+    display: flex;
+    flex-direction: column;
     gap: 20px;
-    background-color: #d6cccc;
-    padding: 1rem 1rem 1rem 1.5rem;
-    position: absolute;
+    font-size: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     align-items: center;
 }
 
-#historyIcon > div {
-    display: flex;
+.history__icon__data {
+    display: none;
     flex-direction: column;
     gap: 10px;
+}
+
+#historyIcon {
+    display: none;
+    gap: 20px;
+    padding: 1rem 1rem 1rem 1.5rem;
+    position: absolute;
+    align-items: center;
+    width: 460px;
+    max-height: 326px;
+    background-color: #d8cac0;
+    border-radius: 10px;
+    border: 1px solid black;
+    transform: translate(-23px, 25px);
 }
 
 .history__icon__header {
@@ -248,6 +263,10 @@ hr {
     margin-left: 14px;
 }
 
+#historyIconBtnClear {
+    cursor: pointer;
+}
+
 #mode {
     cursor: pointer;
     user-select: none;
@@ -256,7 +275,6 @@ hr {
 .history__icon__bottom {
     display: flex;
     justify-content: flex-end;
-    cursor: pointer;
 }
 
 #icon {

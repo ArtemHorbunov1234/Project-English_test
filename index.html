@@ -32,7 +32,12 @@
                         <div>
                             <button id="historyButton">History</button>
                             <div id="historyIcon">
-                                <div>
+                                <div class="history__icon__withoutData">
+                                    <img width="70px" height="70px" src="/img/icon-sad.png" alt="" />
+
+                                    <h3>Поки що у вас немає даних щодо статистики та відповідей.</h3>
+                                </div>
+                                <div class="history__icon__data">
                                     <div class="history__icon__top">
                                         <div class="history__icon__header">
                                             <h3>Статистика</h3>
@@ -68,7 +73,13 @@
                                     </div>
                                     <div id="iconAddTeg"></div>
                                     <div class="history__icon__bottom">
-                                        <img width="25px" height="25px" src="/img/icon-btn_clear.png" alt="clear" />
+                                        <img
+                                            id="historyIconBtnClear"
+                                            width="25px"
+                                            height="25px"
+                                            src="/img/icon-btn_clear.png"
+                                            alt="clear"
+                                        />
                                     </div>
                                 </div>
                             </div>
