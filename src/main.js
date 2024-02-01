@@ -1,5 +1,12 @@
-import { value } from './dataFetcher.js';
-const valueInput = document.getElementById('myInput');
+import { dataEnglish } from './dataFetcher.js';
+import { historyIconData, historyIconHidden, valueInput } from './languageLearningApp.js';
+import {
+    historyIconWithoutData,
+    tegLiLast,
+    saveNum,
+    meanValueCalculator,
+    randomInteger,
+} from './languageLearningApp.js';
 const btnStartPush = document.getElementById('containerBtn');
 const text = document.getElementById('taskText');
 const imgAmendText = document.getElementById('changeImg');
@@ -13,17 +20,14 @@ const display = document.getElementById('activeDisplay');
 const iconActive = document.getElementById('mode');
 const iconMode = document.getElementById('icon');
 const replacementMode = document.getElementById('replacementMode');
-const iconNormal = document.getElementById('iconNormalMode');
-const iconHard = document.getElementById('iconHardMode');
 const iconAddTeg = document.getElementById('iconAddTeg');
 const historyIcon = document.getElementById('historyIcon');
 const historyButton = document.getElementById('historyButton');
 const iconMeanValue = document.getElementById('iconMeanValue');
-const historyIconWithoutData = document.querySelector('.history__icon__withoutData');
-const historyIconData = document.querySelector('.history__icon__data');
 const countCombo = document.getElementById('countCombo');
 const historyIconBtnClear = document.getElementById('historyIconBtnClear');
 const divElement = document.querySelector('#iconAddTeg');
+const h2Elements = document.querySelectorAll('#icon h2');
 let state = false;
 let randomNumber;
 let iconModeSwitch = true;
@@ -39,18 +43,9 @@ countCombo.innerHTML = savedCountCombo;
 countGood.innerHTML = savedNumGood;
 countBad.innerHTML = savedNumBad;
 iconMeanValue.innerText = savedIconMeanValue;
-let numGood = Number(countGood.innerText);
-let numBad = Number(countBad.innerText);
-const historyIconHidden = () => {
-    const sumNum = numGood + numBad;
-    if (sumNum >= 1) {
-        historyIconWithoutData.style.display = 'none';
-        historyIconData.style.display = 'flex';
-    } else {
-        historyIconWithoutData.style.display = 'flex';
-        historyIconData.style.display = 'none';
-    }
-};
+export let numGood = Number(countGood.innerText);
+export let numBad = Number(countBad.innerText);
+
 historyIconHidden();
 
 historyIconBtnClear.onclick = function () {
@@ -60,44 +55,18 @@ historyIconBtnClear.onclick = function () {
     countGood.innerHTML = 0;
     countBad.innerHTML = 0;
     countCombo.innerHTML = 0;
-
     numGood = Number(countGood.innerText);
     numBad = Number(countBad.innerText);
-
     divElement.innerHTML = '';
     historyIconWithoutData.style.display = 'flex';
     historyIconData.style.display = 'none';
-};
-
-const tegLiLast = function (value_1, value_2, nomination, name) {
-    const tegLi = `
-    <img width="18px" style="margin-left: 14px" src="/img/${name}.png" alt="" />
-    <b id="icon_nomination">${nomination}.</b><span>${valueInput.value}</span>
-    <img width="20px" src="/img/icon-right-arrow.png" alt="" />
-    <span>${value_1}</span>
-    <img width="20px" src="/img/icon-equal-mathematical-sign.png" alt="" />
-    <span >${value_2}</span>`;
-    localStorage.setItem(`'${nomination}'`, tegLi);
-    return tegLi;
-};
-
-const saveNum = (numGood, numBad) => {
-    localStorage.setItem('numGood', numGood);
-    localStorage.setItem('numBad', numBad);
-};
-
-const meanValueCalculator = (countReplyGood, countReplyBad) => {
-    const sumTask = countReplyBad + countReplyGood;
-    const meanValue = ((countReplyGood / sumTask) * 100).toFixed(2);
-    localStorage.setItem('meanValue', meanValue);
-    return meanValue;
 };
 
 btnStart.onclick = function () {
     btnStart.style.display = 'none';
     display.style.display = 'flex';
     randomNumber = randomInteger(1, 100);
-    text.innerText = value[randomNumber].translation;
+    text.innerText = dataEnglish[randomNumber].translation;
     for (let a = 0; a <= numGood + numBad; a++) {
         const liLast = document.createElement('li');
         const liSaved = localStorage.getItem(`'${a}'`);
@@ -111,28 +80,24 @@ controlLanguage.onclick = function () {
     ukraine.classList.remove('border');
     if (state) {
         english.classList.add('border');
-        text.innerText = value[randomNumber].translation;
+        text.innerText = dataEnglish[randomNumber].translation;
     } else {
         ukraine.classList.add('border');
-        text.innerText = value[randomNumber].word;
+        text.innerText = dataEnglish[randomNumber].word;
     }
     state = !state;
 };
 
-function randomInteger(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 imgAmendText.onclick = function () {
     randomNumber = randomInteger(1, 100);
-    if (state === true) text.innerText = value[randomNumber].word;
-    else text.innerText = value[randomNumber].translation;
+    if (state === true) text.innerText = dataEnglish[randomNumber].word;
+    else text.innerText = dataEnglish[randomNumber].translation;
 };
 
 btnStartPush.onclick = function () {
     let liLast = document.createElement('li');
     if (state === true) {
-        if (valueInput.value === value[randomNumber].translation) {
+        if (valueInput.value === dataEnglish[randomNumber].translation) {
             alert('Good'), numGood++, numberOfCorrectAnswers++, (countGood.innerText = numGood);
             countCombo.innerText =
                 numberOfCorrectAnswers > countCombo.innerText ? numberOfCorrectAnswers : countCombo.innerText;
@@ -141,14 +106,16 @@ btnStartPush.onclick = function () {
 
             saveNum(numGood, numBad);
             liLast.innerHTML = tegLiLast(
-                value[randomNumber].translation,
-                value[randomNumber].word,
+                dataEnglish[randomNumber].translation,
+                dataEnglish[randomNumber].word,
                 numBad + numGood,
                 'good'
             );
             iconAddTeg.appendChild(liLast);
         } else {
-            alert(`${valueInput.value}не правильный ответ. Правильный ответ: ${value[randomNumber].translation}  `),
+            alert(
+                `${valueInput.value}не правильный ответ. Правильный ответ: ${dataEnglish[randomNumber].translation}  `
+            ),
                 numBad++,
                 (countBad.innerText = numBad);
             numberOfCorrectAnswers > countCombo.innerText ? numberOfCorrectAnswers : countCombo.innerText;
@@ -157,8 +124,8 @@ btnStartPush.onclick = function () {
             saveNum(numGood, numBad);
 
             liLast.innerHTML = tegLiLast(
-                value[randomNumber].translation,
-                value[randomNumber].word,
+                dataEnglish[randomNumber].translation,
+                dataEnglish[randomNumber].word,
                 numBad + numGood,
                 'bad'
             );
@@ -166,9 +133,9 @@ btnStartPush.onclick = function () {
         }
 
         randomNumber = randomInteger(1, 100);
-        text.innerText = value[randomNumber].word;
+        text.innerText = dataEnglish[randomNumber].word;
     } else {
-        if (valueInput.value === value[randomNumber].word) {
+        if (valueInput.value === dataEnglish[randomNumber].word) {
             alert('Good'), numGood++, numberOfCorrectAnswers++, (countGood.innerText = numGood);
             iconMeanValue.innerText = meanValueCalculator(numGood, numBad);
             saveNum(numGood, numBad);
@@ -177,14 +144,14 @@ btnStartPush.onclick = function () {
                 numberOfCorrectAnswers > countCombo.innerText ? numberOfCorrectAnswers : countCombo.innerText;
 
             liLast.innerHTML = tegLiLast(
-                value[randomNumber].word,
-                value[randomNumber].translation,
+                dataEnglish[randomNumber].word,
+                dataEnglish[randomNumber].translation,
                 numBad + numGood,
                 'good'
             );
             iconAddTeg.appendChild(liLast);
         } else {
-            alert(`${valueInput.value}не правильный ответ. Правильный ответ: ${value[randomNumber].word} `),
+            alert(`${valueInput.value}не правильный ответ. Правильный ответ: ${dataEnglish[randomNumber].word} `),
                 numBad++,
                 (countBad.innerText = numBad);
             saveNum(numGood, numBad);
@@ -194,8 +161,8 @@ btnStartPush.onclick = function () {
             iconMeanValue.innerText = meanValueCalculator(numGood, numBad);
 
             liLast.innerHTML = tegLiLast(
-                value[randomNumber].word,
-                value[randomNumber].translation,
+                dataEnglish[randomNumber].word,
+                dataEnglish[randomNumber].translation,
                 numBad + numGood,
                 'bad'
             );
@@ -203,7 +170,7 @@ btnStartPush.onclick = function () {
         }
 
         randomNumber = randomInteger(1, 100);
-        text.innerText = value[randomNumber].translation;
+        text.innerText = dataEnglish[randomNumber].translation;
     }
     historyIconHidden();
 
@@ -215,17 +182,14 @@ iconActive.onclick = function () {
     iconModeSwitch = !iconModeSwitch;
 };
 
-iconNormal.onclick = function () {
-    replacementMode.innerText = 'Normal';
-    iconMode.style.display = 'none';
-    iconModeSwitch = !iconModeSwitch;
-};
-
-iconHard.onclick = function () {
-    replacementMode.innerText = 'Hard';
-    icon.style.display = 'none';
-    iconSwitch = !iconSwitch;
-};
+h2Elements.forEach((element) => {
+    element.onclick = function () {
+        replacementMode.innerText = element.innerText;
+        visibilityIconMode = iconModeSwitch ? 'block' : 'none';
+        iconMode.style.display = `${visibilityIconMode}`;
+        iconModeSwitch = !iconModeSwitch;
+    };
+});
 
 historyButton.onclick = function (event) {
     event.stopPropagation();

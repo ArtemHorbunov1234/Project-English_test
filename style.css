@@ -280,12 +280,11 @@ hr {
 #icon {
     display: none;
     position: absolute;
-    width: 100px;
-    height: 50px;
     background-color: aliceblue;
-    transform: translate(4px, 27px);
     border-radius: 1px;
     user-select: none;
+    width: 147px;
+    transform: translate(-22px, 114px);
 }
 
 #iconAddTeg > li {
