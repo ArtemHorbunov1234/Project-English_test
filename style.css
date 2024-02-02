@@ -4,6 +4,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     font-family: Arial, sans-serif;
+    height: 50vh;
 }
 
 * {
@@ -271,7 +272,15 @@ hr {
     cursor: pointer;
     user-select: none;
     width: 90px;
+    text-align: justify;
 }
+
+#replacementMode {
+    background-color: rgb(134 133 169 / 66%);
+    padding: 1.3px;
+    border-radius: 5px;
+}
+
 .history__icon__bottom {
     display: flex;
     justify-content: flex-end;
@@ -284,7 +293,7 @@ hr {
     border-radius: 1px;
     user-select: none;
     width: 147px;
-    transform: translate(-22px, 114px);
+    transform: translate(-31px, 133px);
 }
 
 #iconAddTeg > li {

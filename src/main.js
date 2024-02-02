@@ -1,5 +1,5 @@
-import { dataEnglish } from './dataFetcher.js';
-import { historyIconData, historyIconHidden, valueInput } from './languageLearningApp.js';
+import { dataFetch } from './dataFetcher.js';
+import { historyIconData, historyIconHidden, valueInput, iconText } from './languageLearningApp.js';
 import {
     historyIconWithoutData,
     tegLiLast,
@@ -28,6 +28,7 @@ const countCombo = document.getElementById('countCombo');
 const historyIconBtnClear = document.getElementById('historyIconBtnClear');
 const divElement = document.querySelector('#iconAddTeg');
 const h2Elements = document.querySelectorAll('#icon h2');
+let databaseSelection = 0;
 let state = false;
 let randomNumber;
 let iconModeSwitch = true;
@@ -66,7 +67,7 @@ btnStart.onclick = function () {
     btnStart.style.display = 'none';
     display.style.display = 'flex';
     randomNumber = randomInteger(1, 100);
-    text.innerText = dataEnglish[randomNumber].translation;
+    text.innerText = dataFetch[0][randomNumber].translation;
     for (let a = 0; a <= numGood + numBad; a++) {
         const liLast = document.createElement('li');
         const liSaved = localStorage.getItem(`'${a}'`);
@@ -80,24 +81,24 @@ controlLanguage.onclick = function () {
     ukraine.classList.remove('border');
     if (state) {
         english.classList.add('border');
-        text.innerText = dataEnglish[randomNumber].translation;
+        text.innerText = dataFetch[databaseSelection][randomNumber].translation;
     } else {
         ukraine.classList.add('border');
-        text.innerText = dataEnglish[randomNumber].word;
+        text.innerText = dataFetch[databaseSelection][randomNumber].word;
     }
     state = !state;
 };
 
 imgAmendText.onclick = function () {
     randomNumber = randomInteger(1, 100);
-    if (state === true) text.innerText = dataEnglish[randomNumber].word;
-    else text.innerText = dataEnglish[randomNumber].translation;
+    if (state === true) text.innerText = dataFetch[databaseSelection][randomNumber].word;
+    else text.innerText = dataFetch[databaseSelection][randomNumber].translation;
 };
 
 btnStartPush.onclick = function () {
     let liLast = document.createElement('li');
     if (state === true) {
-        if (valueInput.value === dataEnglish[randomNumber].translation) {
+        if (valueInput.value === dataFetch[databaseSelection][randomNumber].translation) {
             alert('Good'), numGood++, numberOfCorrectAnswers++, (countGood.innerText = numGood);
             countCombo.innerText =
                 numberOfCorrectAnswers > countCombo.innerText ? numberOfCorrectAnswers : countCombo.innerText;
@@ -106,15 +107,15 @@ btnStartPush.onclick = function () {
 
             saveNum(numGood, numBad);
             liLast.innerHTML = tegLiLast(
-                dataEnglish[randomNumber].translation,
-                dataEnglish[randomNumber].word,
+                dataFetch[databaseSelection][randomNumber].translation,
+                dataFetch[databaseSelection][randomNumber].word,
                 numBad + numGood,
                 'good'
             );
             iconAddTeg.appendChild(liLast);
         } else {
             alert(
-                `${valueInput.value}не правильный ответ. Правильный ответ: ${dataEnglish[randomNumber].translation}  `
+                `${valueInput.value}не правильный ответ. Правильный ответ: ${dataFetch[databaseSelection][randomNumber].translation}  `
             ),
                 numBad++,
                 (countBad.innerText = numBad);
@@ -124,8 +125,8 @@ btnStartPush.onclick = function () {
             saveNum(numGood, numBad);
 
             liLast.innerHTML = tegLiLast(
-                dataEnglish[randomNumber].translation,
-                dataEnglish[randomNumber].word,
+                dataFetch[databaseSelection][randomNumber].translation,
+                dataFetch[databaseSelection][randomNumber].word,
                 numBad + numGood,
                 'bad'
             );
@@ -133,9 +134,9 @@ btnStartPush.onclick = function () {
         }
 
         randomNumber = randomInteger(1, 100);
-        text.innerText = dataEnglish[randomNumber].word;
+        text.innerText = dataFetch[databaseSelection][randomNumber].word;
     } else {
-        if (valueInput.value === dataEnglish[randomNumber].word) {
+        if (valueInput.value === dataFetch[databaseSelection][randomNumber].word) {
             alert('Good'), numGood++, numberOfCorrectAnswers++, (countGood.innerText = numGood);
             iconMeanValue.innerText = meanValueCalculator(numGood, numBad);
             saveNum(numGood, numBad);
@@ -144,14 +145,16 @@ btnStartPush.onclick = function () {
                 numberOfCorrectAnswers > countCombo.innerText ? numberOfCorrectAnswers : countCombo.innerText;
 
             liLast.innerHTML = tegLiLast(
-                dataEnglish[randomNumber].word,
-                dataEnglish[randomNumber].translation,
+                dataFetch[databaseSelection][randomNumber].word,
+                dataFetch[databaseSelection][randomNumber].translation,
                 numBad + numGood,
                 'good'
             );
             iconAddTeg.appendChild(liLast);
         } else {
-            alert(`${valueInput.value}не правильный ответ. Правильный ответ: ${dataEnglish[randomNumber].word} `),
+            alert(
+                `${valueInput.value}не правильный ответ. Правильный ответ: ${dataFetch[databaseSelection][randomNumber].word} `
+            ),
                 numBad++,
                 (countBad.innerText = numBad);
             saveNum(numGood, numBad);
@@ -161,8 +164,8 @@ btnStartPush.onclick = function () {
             iconMeanValue.innerText = meanValueCalculator(numGood, numBad);
 
             liLast.innerHTML = tegLiLast(
-                dataEnglish[randomNumber].word,
-                dataEnglish[randomNumber].translation,
+                dataFetch[databaseSelection][randomNumber].word,
+                dataFetch[databaseSelection][randomNumber].translation,
                 numBad + numGood,
                 'bad'
             );
@@ -170,7 +173,7 @@ btnStartPush.onclick = function () {
         }
 
         randomNumber = randomInteger(1, 100);
-        text.innerText = dataEnglish[randomNumber].translation;
+        text.innerText = dataFetch[databaseSelection][randomNumber].translation;
     }
     historyIconHidden();
 
@@ -184,10 +187,15 @@ iconActive.onclick = function () {
 
 h2Elements.forEach((element) => {
     element.onclick = function () {
-        replacementMode.innerText = element.innerText;
         visibilityIconMode = iconModeSwitch ? 'block' : 'none';
         iconMode.style.display = `${visibilityIconMode}`;
         iconModeSwitch = !iconModeSwitch;
+        const dataCountBaseSelection = element.getAttribute('count');
+        databaseSelection = dataCountBaseSelection;
+        replacementMode.innerText = iconText[dataCountBaseSelection];
+
+        if (state === true) text.innerText = dataFetch[databaseSelection][randomNumber].word;
+        else text.innerText = dataFetch[databaseSelection][randomNumber].translation;
     };
 });
 
@@ -201,6 +209,9 @@ document.body.onclick = function (event) {
         historyIcon.style.display = 'none';
         iconHistorySwitch = true;
     }
+    // } else if (!iconActive.contains(event.target) && iconModeSwitch === false) {
+    //     iconModeSwitch = true;
+    // }
 };
 
 function toggleHistoryIconVisibility() {

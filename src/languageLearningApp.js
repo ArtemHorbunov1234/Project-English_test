@@ -3,6 +3,7 @@ export const historyIconData = document.querySelector('.history__icon__data');
 export const valueInput = document.getElementById('myInput');
 import { numBad } from './main.js';
 import { numGood } from './main.js';
+export const iconText = ['Випадкові', 'Подорожі', 'Знайомство', `Сім'я`, 'Магазин', 'Зовнішності'];
 const historyIconHidden = () => {
     const sumNum = numGood + numBad;
     if (sumNum >= 1) {

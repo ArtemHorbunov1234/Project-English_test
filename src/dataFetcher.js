@@ -1,70 +1,39 @@
-let dataEnglish;
-let dataTravel;
-let dataFamiliarity;
-let dataDescriptionOfAppearance;
+const dataFetch = [];
+const urlFetch = [
+    'https://6585c8f5022766bcb8c95bf4.mockapi.io/English',
+    'https://6585c8f5022766bcb8c95bf4.mockapi.io/Travel',
+    'https://6585c8f5022766bcb8c95bf4.mockapi.io/Familiarity',
+    'https://6585c8f5022766bcb8c95bf4.mockapi.io/Family',
+    'https://6585c8f5022766bcb8c95bf4.mockapi.io/Shop',
+    'https://6585c8f5022766bcb8c95bf4.mockapi.io/DescriptionOfAppearance',
+];
 
-fetch('https://6585c8f5022766bcb8c95bf4.mockapi.io/English', {
-    method: 'Get',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-})
-    .then((res) => {
-        return res.json();
-    })
-    .then((data) => {
-        dataEnglish = data;
-    })
-    .catch((error) => {
-        console.error(error);
-    });
+const fetchData = async () => {
+    let a = 0;
+    let b = urlFetch.length;
+    while (a < b) {
+        try {
+            const response = await fetch(urlFetch[a], {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
 
-fetch('https://6585c8f5022766bcb8c95bf4.mockapi.io/Travel', {
-    method: 'Get',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-})
-    .then((res) => {
-        return res.json();
-    })
-    .then((data) => {
-        dataTravel = data;
-    })
-    .catch((error) => {
-        console.error(error);
-    });
+            if (!response.ok) {
+                error(`Ошибка HTTP: ${response.status}`);
+            }
 
-fetch('https://6585c8f5022766bcb8c95bf4.mockapi.io/Familiarity', {
-    method: 'Get',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-})
-    .then((res) => {
-        return res.json();
-    })
-    .then((data) => {
-        dataFamiliarity = data;
-    })
-    .catch((error) => {
-        console.error(error);
-    });
+            const data = await response.json();
+            dataFetch.push(data);
+            console.log(dataFetch);
+        } catch (error) {
+            console.error(error.message);
+        }
+        a++;
+    }
+};
 
-fetch('https://6585c8f5022766bcb8c95bf4.mockapi.io/DescriptionOfAppearance', {
-    method: 'Get',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-})
-    .then((res) => {
-        return res.json();
-    })
-    .then((data) => {
-        dataDescriptionOfAppearance = data;
-    })
-    .catch((error) => {
-        console.error(error);
-    });
+fetchData();
 
-export { dataEnglish, dataTravel, dataFamiliarity, dataDescriptionOfAppearance };
+export { dataFetch };
