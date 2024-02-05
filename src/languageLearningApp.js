@@ -34,7 +34,7 @@ const saveNum = (numGood, numBad) => {
 
 const meanValueCalculator = (countReplyGood, countReplyBad) => {
     const sumTask = countReplyBad + countReplyGood;
-    const meanValue = ((countReplyGood / sumTask) * 100).toFixed(2);
+    const meanValue = ((countReplyGood / sumTask) * 100).toFixed(1);
     localStorage.setItem('meanValue', meanValue);
     return meanValue;
 };
@@ -43,4 +43,10 @@ function randomInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-export { historyIconHidden, tegLiLast, saveNum, meanValueCalculator, randomInteger };
+function replyPopup(color, text) {
+    response.style.display = 'block';
+    response.style.background = `${color}`;
+    response.innerText = `${text}`;
+}
+
+export { historyIconHidden, tegLiLast, saveNum, meanValueCalculator, randomInteger, replyPopup };

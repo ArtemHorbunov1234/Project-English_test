@@ -1,5 +1,5 @@
 import { dataFetch } from './dataFetcher.js';
-import { historyIconData, historyIconHidden, valueInput, iconText } from './languageLearningApp.js';
+import { historyIconData, historyIconHidden, valueInput, iconText, replyPopup } from './languageLearningApp.js';
 import {
     historyIconWithoutData,
     tegLiLast,
@@ -15,7 +15,7 @@ const english = document.getElementById('languageEnglish');
 const ukraine = document.getElementById('languageUkr');
 const countBad = document.getElementById('countBabReply');
 const countGood = document.getElementById('countGoodReply');
-const btnStart = document.getElementById('btnStart');
+export const btnStart = document.getElementById('btnStart');
 const display = document.getElementById('activeDisplay');
 const iconActive = document.getElementById('mode');
 const iconMode = document.getElementById('icon');
@@ -28,6 +28,7 @@ const countCombo = document.getElementById('countCombo');
 const historyIconBtnClear = document.getElementById('historyIconBtnClear');
 const divElement = document.querySelector('#iconAddTeg');
 const h2Elements = document.querySelectorAll('#icon h2');
+const response = document.getElementById('response');
 let databaseSelection = 0;
 let state = false;
 let randomNumber;
@@ -99,7 +100,10 @@ btnStartPush.onclick = function () {
     let liLast = document.createElement('li');
     if (state === true) {
         if (valueInput.value === dataFetch[databaseSelection][randomNumber].translation) {
-            alert('Good'), numGood++, numberOfCorrectAnswers++, (countGood.innerText = numGood);
+            replyPopup('rgba(0, 128, 0, 0.527)', 'Правельна відповідь'),
+                numGood++,
+                numberOfCorrectAnswers++,
+                (countGood.innerText = numGood);
             countCombo.innerText =
                 numberOfCorrectAnswers > countCombo.innerText ? numberOfCorrectAnswers : countCombo.innerText;
             localStorage.setItem('countCombo', `${countCombo.innerText}`);
@@ -114,11 +118,12 @@ btnStartPush.onclick = function () {
             );
             iconAddTeg.appendChild(liLast);
         } else {
-            alert(
-                `${valueInput.value}не правильный ответ. Правильный ответ: ${dataFetch[databaseSelection][randomNumber].translation}  `
-            ),
-                numBad++,
-                (countBad.innerText = numBad);
+            replyPopup(
+                '#ff0000ba',
+                `${valueInput.value} не правильна відповідь. Правильна відповідь: ${dataFetch[databaseSelection][randomNumber].translation}  `
+            );
+
+            numBad++, (countBad.innerText = numBad);
             numberOfCorrectAnswers > countCombo.innerText ? numberOfCorrectAnswers : countCombo.innerText;
             numberOfCorrectAnswers = 0;
             iconMeanValue.innerText = meanValueCalculator(numGood, numBad);
@@ -137,7 +142,10 @@ btnStartPush.onclick = function () {
         text.innerText = dataFetch[databaseSelection][randomNumber].word;
     } else {
         if (valueInput.value === dataFetch[databaseSelection][randomNumber].word) {
-            alert('Good'), numGood++, numberOfCorrectAnswers++, (countGood.innerText = numGood);
+            replyPopup('rgba(0, 128, 0, 0.527)', 'Правельна відповідь'),
+                numGood++,
+                numberOfCorrectAnswers++,
+                (countGood.innerText = numGood);
             iconMeanValue.innerText = meanValueCalculator(numGood, numBad);
             saveNum(numGood, numBad);
 
@@ -152,11 +160,12 @@ btnStartPush.onclick = function () {
             );
             iconAddTeg.appendChild(liLast);
         } else {
-            alert(
-                `${valueInput.value}не правильный ответ. Правильный ответ: ${dataFetch[databaseSelection][randomNumber].word} `
-            ),
-                numBad++,
-                (countBad.innerText = numBad);
+            replyPopup(
+                '#ff0000ba',
+                `${valueInput.value} не правильна відповідь. Правильна відповідь: ${dataFetch[databaseSelection][randomNumber].word}  `
+            );
+
+            numBad++, (countBad.innerText = numBad);
             saveNum(numGood, numBad);
 
             numberOfCorrectAnswers > countCombo.innerText ? numberOfCorrectAnswers : countCombo.innerText;
@@ -176,6 +185,9 @@ btnStartPush.onclick = function () {
         text.innerText = dataFetch[databaseSelection][randomNumber].translation;
     }
     historyIconHidden();
+    setTimeout(() => {
+        response.style.display = 'none';
+    }, 4500);
 
     valueInput.value = '';
 };
@@ -186,13 +198,14 @@ iconActive.onclick = function () {
 };
 
 h2Elements.forEach((element) => {
-    element.onclick = function () {
+    element.onclick = function (event) {
         visibilityIconMode = iconModeSwitch ? 'block' : 'none';
         iconMode.style.display = `${visibilityIconMode}`;
         iconModeSwitch = !iconModeSwitch;
         const dataCountBaseSelection = element.getAttribute('count');
         databaseSelection = dataCountBaseSelection;
         replacementMode.innerText = iconText[dataCountBaseSelection];
+        event.stopPropagation();
 
         if (state === true) text.innerText = dataFetch[databaseSelection][randomNumber].word;
         else text.innerText = dataFetch[databaseSelection][randomNumber].translation;
@@ -208,10 +221,11 @@ document.body.onclick = function (event) {
     if (!historyIcon.contains(event.target) && iconHistorySwitch === false) {
         historyIcon.style.display = 'none';
         iconHistorySwitch = true;
+    } else if (!iconActive.contains(event.target) && iconModeSwitch === false) {
+        iconMode.style.display = 'none';
+        iconModeSwitch = true;
+        console.log(event);
     }
-    // } else if (!iconActive.contains(event.target) && iconModeSwitch === false) {
-    //     iconModeSwitch = true;
-    // }
 };
 
 function toggleHistoryIconVisibility() {

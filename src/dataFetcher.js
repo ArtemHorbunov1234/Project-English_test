@@ -1,3 +1,5 @@
+const iconStartLoading = document.getElementById('iconStartLoading');
+import { btnStart } from './main.js';
 const dataFetch = [];
 const urlFetch = [
     'https://6585c8f5022766bcb8c95bf4.mockapi.io/English',
@@ -32,6 +34,8 @@ const fetchData = async () => {
         }
         a++;
     }
+    iconStartLoading.style.display = 'none';
+    btnStart.disabled = false;
 };
 
 fetchData();

@@ -26,7 +26,6 @@ body {
 .container {
     display: none;
     flex-direction: column;
-    gap: 18px;
     align-items: center;
     border-radius: 5px;
 }
@@ -35,12 +34,14 @@ body {
     border-radius: 10px;
     padding-left: 9px;
     height: 32px;
+    margin-bottom: 15px;
 }
 
 .container__navigation {
     display: flex;
     gap: 3rem;
     align-items: center;
+    margin-bottom: 1.2rem;
 }
 
 .container__navigation > h1 {
@@ -70,7 +71,7 @@ body {
 }
 
 hr {
-    width: 479px;
+    width: 512px;
     border-color: black;
     border-width: 1.4px;
 }
@@ -124,6 +125,11 @@ hr {
     width: fit-content;
 }
 
+#iconStartLoading {
+    position: absolute;
+    transform: translate(-81px, 21px);
+}
+
 #btnStart {
     margin-top: 5.5rem;
 }
@@ -136,6 +142,8 @@ hr {
     display: flex;
     gap: 5px;
     margin-left: 1.6rem;
+    margin-bottom: 18px;
+    margin-top: 10px;
 }
 
 .container__img {
@@ -219,6 +227,7 @@ hr {
     border-radius: 10px;
     border: 1px solid black;
     transform: translate(-23px, 25px);
+    animation: fadeIn 0.3s ease-out;
 }
 
 .history__icon__header {
@@ -286,6 +295,12 @@ hr {
     justify-content: flex-end;
 }
 
+#response {
+    width: 518px;
+    background-color: rgba(0, 128, 0, 0.527);
+    display: none;
+}
+
 #icon {
     display: none;
     position: absolute;
@@ -311,5 +326,16 @@ hr {
 @media (min-width: 768px) {
     #containerBtn {
         padding: 0.25em 0.75em;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-23px, 0px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-23px, 25px);
     }
 }
