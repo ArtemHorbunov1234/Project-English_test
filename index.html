@@ -62,7 +62,7 @@
                                         </div>
                                         <div style="display: flex; align-items: flex-end">
                                             <h4>
-                                                Kombo: кількість послідовних відповідей
+                                                Kombo: кількість послідовних відповідей:
                                                 <b id="countCombo">0</b>
                                             </h4>
                                             <img width="23px" height="20px" src="/img/icon-fire.png" alt="" />
@@ -99,11 +99,22 @@
 
                 <hr />
                 <h4 id="response">вірна відповід</h4>
+                <div>
+                    <img
+                        style="cursor: pointer"
+                        id="clockStart"
+                        src="/img/icon-alarm-clock.png"
+                        width="30px"
+                        height="30px"
+                        alt=""
+                    />
+                    <b id="time">0</b>
+                </div>
                 <div class="container__main">
                     <h1 id="taskText">Text</h1>
                     <img id="changeImg" src="img/icon-alter.png" alt="" />
                 </div>
-                <input type="text" id="myInput" value="" />
+                <input type="text" id="myInput" value="" placeholder="писати англійською" />
                 <button class="window--btn" id="containerBtn">Push</button>
             </div>
         </div>

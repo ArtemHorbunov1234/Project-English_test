@@ -1,6 +1,8 @@
 export const historyIconWithoutData = document.querySelector('.history__icon__withoutData');
 export const historyIconData = document.querySelector('.history__icon__data');
 export const valueInput = document.getElementById('myInput');
+const clockStart = document.getElementById('clockStart');
+const time = document.getElementById('time');
 import { numBad } from './main.js';
 import { numGood } from './main.js';
 export const iconText = ['Випадкові', 'Подорожі', 'Знайомство', `Сім'я`, 'Магазин', 'Зовнішності'];
@@ -44,9 +46,25 @@ function randomInteger(min, max) {
 }
 
 function replyPopup(color, text) {
-    response.style.display = 'block';
+    response.style.opacity = '1';
     response.style.background = `${color}`;
     response.innerText = `${text}`;
 }
+
+function timeOut() {
+    let timeCount = 60;
+    const timerInterval = setInterval(() => {
+        if (timeCount === 0) {
+            clearInterval(timerInterval); // Остановить интервал, если время истекло
+        } else {
+            time.innerHTML = `${timeCount}`;
+            timeCount--;
+        }
+    }, 1000);
+}
+
+clockStart.onclick = function () {
+    timeOut();
+};
 
 export { historyIconHidden, tegLiLast, saveNum, meanValueCalculator, randomInteger, replyPopup };

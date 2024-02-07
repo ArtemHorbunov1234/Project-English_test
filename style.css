@@ -19,7 +19,7 @@ body {
     background-color: #605f7cbd;
     width: 518px;
     margin-inline: auto;
-    height: 307px;
+    height: 325px;
     border-radius: 10px;
     text-align: center;
 }
@@ -64,10 +64,33 @@ body {
     font-size: 1.3rem;
     border: solid 1px;
     cursor: pointer;
+    animation: slideIn 0.16s ease-in-out forwards;
+    opacity: 0;
+}
+#icon > h2:nth-child(0) {
+    animation-delay: 0.1s;
+}
+#icon > h2:nth-child(1) {
+    animation-delay: 0.2s;
+}
+#icon > h2:nth-child(2) {
+    animation-delay: 0.3s;
+}
+#icon > h2:nth-child(3) {
+    animation-delay: 0.4s;
+}
+#icon > h2:nth-child(4) {
+    animation-delay: 0.5s;
+}
+#icon > h2:nth-child(5) {
+    animation-delay: 0.6s;
+}
+#icon > h2:nth-child(6) {
+    animation-delay: 0.7s;
 }
 
 #icon > h2:hover {
-    background-color: rgb(79, 87, 94);
+    background-color: rgba(79, 87, 94, 0.541);
 }
 
 hr {
@@ -88,6 +111,7 @@ hr {
     padding: 4px;
     border-radius: 12px;
     color: white;
+    width: 320px;
 }
 
 .border {
@@ -131,7 +155,7 @@ hr {
 }
 
 #btnStart {
-    margin-top: 5.5rem;
+    margin-top: 6.5rem;
 }
 
 #containerBtn {
@@ -298,7 +322,7 @@ hr {
 #response {
     width: 518px;
     background-color: rgba(0, 128, 0, 0.527);
-    display: none;
+    opacity: 0;
 }
 
 #icon {
@@ -337,5 +361,16 @@ hr {
     to {
         opacity: 1;
         transform: translate(-23px, 25px);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0px);
     }
 }

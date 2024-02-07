@@ -1,5 +1,5 @@
-import { dataFetch } from './dataFetcher.js';
 import { historyIconData, historyIconHidden, valueInput, iconText, replyPopup } from './languageLearningApp.js';
+import { dataFetch } from './dataFetcher.js';
 import {
     historyIconWithoutData,
     tegLiLast,
@@ -37,6 +37,7 @@ let iconHistorySwitch = true;
 let visibilityIconMode;
 let visibilityIconHistory;
 let numberOfCorrectAnswers = 0;
+
 let savedCountCombo = parseInt(localStorage.getItem('countCombo')) || 0;
 let savedNumGood = parseInt(localStorage.getItem('numGood')) || 0;
 let savedNumBad = parseInt(localStorage.getItem('numBad')) || 0;
@@ -83,9 +84,11 @@ controlLanguage.onclick = function () {
     if (state) {
         english.classList.add('border');
         text.innerText = dataFetch[databaseSelection][randomNumber].translation;
+        valueInput.placeholder = 'писати англійською';
     } else {
         ukraine.classList.add('border');
         text.innerText = dataFetch[databaseSelection][randomNumber].word;
+        valueInput.placeholder = 'писати українською';
     }
     state = !state;
 };
@@ -108,7 +111,6 @@ btnStartPush.onclick = function () {
                 numberOfCorrectAnswers > countCombo.innerText ? numberOfCorrectAnswers : countCombo.innerText;
             localStorage.setItem('countCombo', `${countCombo.innerText}`);
             iconMeanValue.innerText = meanValueCalculator(numGood, numBad);
-
             saveNum(numGood, numBad);
             liLast.innerHTML = tegLiLast(
                 dataFetch[databaseSelection][randomNumber].translation,
@@ -185,8 +187,11 @@ btnStartPush.onclick = function () {
         text.innerText = dataFetch[databaseSelection][randomNumber].translation;
     }
     historyIconHidden();
+    btnStartPush.disabled = true;
+
     setTimeout(() => {
-        response.style.display = 'none';
+        response.style.opacity = '0';
+        btnStartPush.disabled = false;
     }, 4500);
 
     valueInput.value = '';
@@ -224,7 +229,6 @@ document.body.onclick = function (event) {
     } else if (!iconActive.contains(event.target) && iconModeSwitch === false) {
         iconMode.style.display = 'none';
         iconModeSwitch = true;
-        console.log(event);
     }
 };
 
