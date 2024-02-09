@@ -94,7 +94,7 @@ body {
 }
 
 hr {
-    width: 512px;
+    width: 518px;
     border-color: black;
     border-width: 1.4px;
 }
@@ -167,7 +167,7 @@ hr {
     gap: 5px;
     margin-left: 1.6rem;
     margin-bottom: 18px;
-    margin-top: 10px;
+    margin-top: -2px;
 }
 
 .container__img {
@@ -333,6 +333,7 @@ hr {
     user-select: none;
     width: 147px;
     transform: translate(-31px, 133px);
+    z-index: 2;
 }
 
 #iconAddTeg > li {
@@ -345,6 +346,30 @@ hr {
 #iconAddTeg {
     overflow-y: auto;
     max-height: 115px;
+}
+.container__menu__widgets {
+    position: absolute;
+    transform: translate(-292px, -1px);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: #605f7cbd;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+#btnMenu {
+    width: 26px;
+    height: 25px;
+    position: absolute;
+    transform: translate(-256px, 1px) rotate(0deg);
+    cursor: pointer;
+}
+
+#hintWord {
+    cursor: pointer;
+    width: 33px;
+    height: 33px;
 }
 
 @media (min-width: 768px) {

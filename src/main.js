@@ -29,6 +29,9 @@ const historyIconBtnClear = document.getElementById('historyIconBtnClear');
 const divElement = document.querySelector('#iconAddTeg');
 const h2Elements = document.querySelectorAll('#icon h2');
 const response = document.getElementById('response');
+const btnMenu = document.getElementById('btnMenu');
+const menuWidgets = document.querySelector('.container__menu__widgets');
+const hintWord = document.getElementById('hintWord');
 let databaseSelection = 0;
 let state = false;
 let randomNumber;
@@ -37,7 +40,8 @@ let iconHistorySwitch = true;
 let visibilityIconMode;
 let visibilityIconHistory;
 let numberOfCorrectAnswers = 0;
-
+let stateIconWidgets = false;
+let lengthCalculation = 0;
 let savedCountCombo = parseInt(localStorage.getItem('countCombo')) || 0;
 let savedNumGood = parseInt(localStorage.getItem('numGood')) || 0;
 let savedNumBad = parseInt(localStorage.getItem('numBad')) || 0;
@@ -51,6 +55,33 @@ export let numBad = Number(countBad.innerText);
 
 historyIconHidden();
 
+btnStart.onclick = function () {
+    btnStart.style.display = 'none';
+    display.style.display = 'flex';
+    randomNumber = randomInteger(1, 100);
+    text.innerText = dataFetch[0][randomNumber].translation;
+    for (let a = 0; a <= numGood + numBad; a++) {
+        const liLast = document.createElement('li');
+        const liSaved = localStorage.getItem(`'${a}'`);
+        liLast.innerHTML = liSaved;
+        iconAddTeg.appendChild(liLast);
+    }
+};
+
+btnMenu.onclick = function () {
+    let visibilityIconWidgets = stateIconWidgets ? 'flex' : 'none';
+    menuWidgets.style.display = `${visibilityIconWidgets}`;
+    stateIconWidgets = !stateIconWidgets;
+    btnMenu.style.transform = `translate(-256px, 1px) ${stateIconWidgets ? 'rotate(-180deg)' : 'rotate(360deg)'}`;
+};
+
+hintWord.addEventListener('click', function () {
+    let keyText = state ? 'translation' : 'word';
+    let languageUkEng = `${dataFetch[databaseSelection][randomNumber][keyText][lengthCalculation]}`;
+    lengthCalculation++;
+    valueInput.value += languageUkEng;
+});
+
 historyIconBtnClear.onclick = function () {
     localStorage.setItem('countCombo', 0);
     localStorage.setItem('numGood', 0);
@@ -63,19 +94,6 @@ historyIconBtnClear.onclick = function () {
     divElement.innerHTML = '';
     historyIconWithoutData.style.display = 'flex';
     historyIconData.style.display = 'none';
-};
-
-btnStart.onclick = function () {
-    btnStart.style.display = 'none';
-    display.style.display = 'flex';
-    randomNumber = randomInteger(1, 100);
-    text.innerText = dataFetch[0][randomNumber].translation;
-    for (let a = 0; a <= numGood + numBad; a++) {
-        const liLast = document.createElement('li');
-        const liSaved = localStorage.getItem(`'${a}'`);
-        liLast.innerHTML = liSaved;
-        iconAddTeg.appendChild(liLast);
-    }
 };
 
 controlLanguage.onclick = function () {

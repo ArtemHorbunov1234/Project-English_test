@@ -1,7 +1,7 @@
 export const historyIconWithoutData = document.querySelector('.history__icon__withoutData');
 export const historyIconData = document.querySelector('.history__icon__data');
 export const valueInput = document.getElementById('myInput');
-const clockStart = document.getElementById('clockStart');
+const clockTime = document.getElementById('clockTime');
 const time = document.getElementById('time');
 import { numBad } from './main.js';
 import { numGood } from './main.js';
@@ -63,7 +63,7 @@ function timeOut() {
     }, 1000);
 }
 
-clockStart.onclick = function () {
+clockTime.onclick = function () {
     timeOut();
 };
 
