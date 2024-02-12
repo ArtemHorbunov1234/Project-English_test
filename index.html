@@ -14,6 +14,7 @@
             <img id="iconStartLoading" width="40px" height="40px" src="/img/ZZ5H.gif" alt="" />
 
             <div class="container" id="activeDisplay">
+                <b id="timer">34</b>
                 <div class="container__navigation">
                     <h1 id="mode">
                         Тема: <img src="/img/icon-plan.png" width="20px" height="20px" alt="" />
@@ -105,15 +106,22 @@
                     <div class="container__menu__widgets">
                         <img id="hintWord" src="/img/icon-tips.png" alt="" />
 
-                        <div>
+                        <div class="container__menu__clock">
                             <img
                                 style="cursor: pointer"
                                 id="clockTime"
                                 src="/img/icon-alarm-clock.png"
                                 width="25px"
                                 height="25px"
-                                alt=""
+                                alt="clock"
                             />
+                            <div id="timeSelection">
+                                <b class="container__menu__clock--color">none</b>
+                                <b>30sec</b>
+                                <b>60sec</b>
+                                <b>90sec</b>
+                            </div>
+
                             <!-- <b id="time">0</b> -->
                         </div>
                     </div>
@@ -123,6 +131,10 @@
                     <h1 id="taskText">Text</h1>
                     <img id="changeImg" src="img/icon-alter.png" alt="" />
                 </div>
+                <p id="hintTop"></p>
+
+                <p id="hintBottom"></p>
+
                 <input type="text" id="myInput" value="" placeholder="писати англійською" />
                 <button class="window--btn" id="containerBtn">Push</button>
             </div>

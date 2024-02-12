@@ -1,10 +1,9 @@
 export const historyIconWithoutData = document.querySelector('.history__icon__withoutData');
 export const historyIconData = document.querySelector('.history__icon__data');
 export const valueInput = document.getElementById('myInput');
-const clockTime = document.getElementById('clockTime');
+export const clockTime = document.getElementById('clockTime');
 const time = document.getElementById('time');
-import { numBad } from './main.js';
-import { numGood } from './main.js';
+import { numBad, numGood } from './main.js';
 export const iconText = ['Випадкові', 'Подорожі', 'Знайомство', `Сім'я`, 'Магазин', 'Зовнішності'];
 const historyIconHidden = () => {
     const sumNum = numGood + numBad;
@@ -55,7 +54,7 @@ function timeOut() {
     let timeCount = 60;
     const timerInterval = setInterval(() => {
         if (timeCount === 0) {
-            clearInterval(timerInterval); // Остановить интервал, если время истекло
+            clearInterval(timerInterval);
         } else {
             time.innerHTML = `${timeCount}`;
             timeCount--;
@@ -63,8 +62,8 @@ function timeOut() {
     }, 1000);
 }
 
-clockTime.onclick = function () {
-    timeOut();
-};
+// clockTime.onclick = function () {
+//     timeOut();
+// };
 
 export { historyIconHidden, tegLiLast, saveNum, meanValueCalculator, randomInteger, replyPopup };

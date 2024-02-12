@@ -1,4 +1,11 @@
-import { historyIconData, historyIconHidden, valueInput, iconText, replyPopup } from './languageLearningApp.js';
+import {
+    historyIconData,
+    historyIconHidden,
+    valueInput,
+    iconText,
+    replyPopup,
+    clockTime,
+} from './languageLearningApp.js';
 import { dataFetch } from './dataFetcher.js';
 import {
     historyIconWithoutData,
@@ -32,6 +39,9 @@ const response = document.getElementById('response');
 const btnMenu = document.getElementById('btnMenu');
 const menuWidgets = document.querySelector('.container__menu__widgets');
 const hintWord = document.getElementById('hintWord');
+const hintBottom = document.getElementById('hintBottom');
+const hintTop = document.getElementById('hintTop');
+const timeSelection = document.getElementById('timeSelection');
 let databaseSelection = 0;
 let state = false;
 let randomNumber;
@@ -42,6 +52,8 @@ let visibilityIconHistory;
 let numberOfCorrectAnswers = 0;
 let stateIconWidgets = false;
 let lengthCalculation = 0;
+let stateClock = false;
+
 let savedCountCombo = parseInt(localStorage.getItem('countCombo')) || 0;
 let savedNumGood = parseInt(localStorage.getItem('numGood')) || 0;
 let savedNumBad = parseInt(localStorage.getItem('numBad')) || 0;
@@ -75,11 +87,34 @@ btnMenu.onclick = function () {
     btnMenu.style.transform = `translate(-256px, 1px) ${stateIconWidgets ? 'rotate(-180deg)' : 'rotate(360deg)'}`;
 };
 
+clockTime.addEventListener('click', function () {
+    let hiddenClock = stateClock ? 'flex' : 'none';
+    timeSelection.style.display = `${hiddenClock}`;
+    stateClock = !stateClock;
+});
+
 hintWord.addEventListener('click', function () {
+    const array = [];
+    const array_text = [];
+    hintBottom.style.display = 'block';
+    hintTop.style.display = 'block';
+    let a = 0;
     let keyText = state ? 'translation' : 'word';
-    let languageUkEng = `${dataFetch[databaseSelection][randomNumber][keyText][lengthCalculation]}`;
+    const b = dataFetch[databaseSelection][randomNumber][keyText].length;
+    array.push(' _ '.repeat(b));
+
+    while (lengthCalculation >= a) {
+        array_text.push(dataFetch[databaseSelection][randomNumber][keyText][`${a}`]);
+        a++;
+    }
+    while (b > array_text.length) {
+        array_text.push(` # `);
+    }
+
+    hintBottom.innerText = array.join('');
+    hintTop.innerText = array_text.join(' ');
+
     lengthCalculation++;
-    valueInput.value += languageUkEng;
 });
 
 historyIconBtnClear.onclick = function () {
@@ -109,10 +144,12 @@ controlLanguage.onclick = function () {
         valueInput.placeholder = 'писати українською';
     }
     state = !state;
+    resetHint();
 };
 
 imgAmendText.onclick = function () {
     randomNumber = randomInteger(1, 100);
+    lengthCalculation = 0;
     if (state === true) text.innerText = dataFetch[databaseSelection][randomNumber].word;
     else text.innerText = dataFetch[databaseSelection][randomNumber].translation;
 };
@@ -203,6 +240,7 @@ btnStartPush.onclick = function () {
 
         randomNumber = randomInteger(1, 100);
         text.innerText = dataFetch[databaseSelection][randomNumber].translation;
+        resetHint();
     }
     historyIconHidden();
     btnStartPush.disabled = true;
@@ -229,6 +267,7 @@ h2Elements.forEach((element) => {
         databaseSelection = dataCountBaseSelection;
         replacementMode.innerText = iconText[dataCountBaseSelection];
         event.stopPropagation();
+        resetHint();
 
         if (state === true) text.innerText = dataFetch[databaseSelection][randomNumber].word;
         else text.innerText = dataFetch[databaseSelection][randomNumber].translation;
@@ -255,3 +294,9 @@ function toggleHistoryIconVisibility() {
     historyIcon.style.display = visibilityIconHistory;
     iconHistorySwitch = !iconHistorySwitch;
 }
+
+const resetHint = () => {
+    hintBottom.style.display = 'none';
+    hintTop.style.display = 'none';
+    lengthCalculation = 0;
+};
