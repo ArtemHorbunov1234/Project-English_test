@@ -1,10 +1,12 @@
+import { numBad, numGood, timeSelectionAll } from './main.js';
 export const historyIconWithoutData = document.querySelector('.history__icon__withoutData');
 export const historyIconData = document.querySelector('.history__icon__data');
 export const valueInput = document.getElementById('myInput');
 export const clockTime = document.getElementById('clockTime');
-const time = document.getElementById('time');
-import { numBad, numGood } from './main.js';
 export const iconText = ['Випадкові', 'Подорожі', 'Знайомство', `Сім'я`, 'Магазин', 'Зовнішності'];
+export const arrayTimerSecond = ['0', '30', '60', '90'];
+const timeSelection = document.getElementById('timeSelection');
+let stateClock = false;
 const historyIconHidden = () => {
     const sumNum = numGood + numBad;
     if (sumNum >= 1) {
@@ -14,6 +16,18 @@ const historyIconHidden = () => {
         historyIconWithoutData.style.display = 'flex';
         historyIconData.style.display = 'none';
     }
+};
+
+const deleteColorTime = () => {
+    timeSelectionAll.forEach((element) => {
+        element.classList.remove('clock--color');
+    });
+};
+
+const clockTimeHidden = () => {
+    let hiddenClock = stateClock ? 'flex' : 'none';
+    timeSelection.style.display = `${hiddenClock}`;
+    stateClock = !stateClock;
 };
 
 const tegLiLast = function (value_1, value_2, nomination, name) {
@@ -66,4 +80,13 @@ function timeOut() {
 //     timeOut();
 // };
 
-export { historyIconHidden, tegLiLast, saveNum, meanValueCalculator, randomInteger, replyPopup };
+export {
+    historyIconHidden,
+    tegLiLast,
+    saveNum,
+    meanValueCalculator,
+    randomInteger,
+    replyPopup,
+    deleteColorTime,
+    clockTimeHidden,
+};

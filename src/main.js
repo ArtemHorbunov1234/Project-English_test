@@ -5,6 +5,8 @@ import {
     iconText,
     replyPopup,
     clockTime,
+    deleteColorTime,
+    clockTimeHidden,
 } from './languageLearningApp.js';
 import { dataFetch } from './dataFetcher.js';
 import {
@@ -13,6 +15,8 @@ import {
     saveNum,
     meanValueCalculator,
     randomInteger,
+    time,
+    arrayTimerSecond,
 } from './languageLearningApp.js';
 const btnStartPush = document.getElementById('containerBtn');
 const text = document.getElementById('taskText');
@@ -41,9 +45,11 @@ const menuWidgets = document.querySelector('.container__menu__widgets');
 const hintWord = document.getElementById('hintWord');
 const hintBottom = document.getElementById('hintBottom');
 const hintTop = document.getElementById('hintTop');
-const timeSelection = document.getElementById('timeSelection');
+export const timeSelectionAll = document.querySelectorAll('#timeSelection b');
+const timer = document.getElementById('timer');
+
 let databaseSelection = 0;
-let state = false;
+let stateLanguage = false;
 let randomNumber;
 let iconModeSwitch = true;
 let iconHistorySwitch = true;
@@ -52,7 +58,6 @@ let visibilityIconHistory;
 let numberOfCorrectAnswers = 0;
 let stateIconWidgets = false;
 let lengthCalculation = 0;
-let stateClock = false;
 
 let savedCountCombo = parseInt(localStorage.getItem('countCombo')) || 0;
 let savedNumGood = parseInt(localStorage.getItem('numGood')) || 0;
@@ -88,9 +93,7 @@ btnMenu.onclick = function () {
 };
 
 clockTime.addEventListener('click', function () {
-    let hiddenClock = stateClock ? 'flex' : 'none';
-    timeSelection.style.display = `${hiddenClock}`;
-    stateClock = !stateClock;
+    clockTimeHidden();
 });
 
 hintWord.addEventListener('click', function () {
@@ -99,7 +102,7 @@ hintWord.addEventListener('click', function () {
     hintBottom.style.display = 'block';
     hintTop.style.display = 'block';
     let a = 0;
-    let keyText = state ? 'translation' : 'word';
+    let keyText = stateLanguage ? 'translation' : 'word';
     const b = dataFetch[databaseSelection][randomNumber][keyText].length;
     array.push(' _ '.repeat(b));
 
@@ -134,7 +137,7 @@ historyIconBtnClear.onclick = function () {
 controlLanguage.onclick = function () {
     english.classList.remove('border');
     ukraine.classList.remove('border');
-    if (state) {
+    if (stateLanguage) {
         english.classList.add('border');
         text.innerText = dataFetch[databaseSelection][randomNumber].translation;
         valueInput.placeholder = 'писати англійською';
@@ -143,20 +146,20 @@ controlLanguage.onclick = function () {
         text.innerText = dataFetch[databaseSelection][randomNumber].word;
         valueInput.placeholder = 'писати українською';
     }
-    state = !state;
+    stateLanguage = !stateLanguage;
     resetHint();
 };
 
 imgAmendText.onclick = function () {
     randomNumber = randomInteger(1, 100);
     lengthCalculation = 0;
-    if (state === true) text.innerText = dataFetch[databaseSelection][randomNumber].word;
+    if (stateLanguage === true) text.innerText = dataFetch[databaseSelection][randomNumber].word;
     else text.innerText = dataFetch[databaseSelection][randomNumber].translation;
 };
 
 btnStartPush.onclick = function () {
     let liLast = document.createElement('li');
-    if (state === true) {
+    if (stateLanguage === true) {
         if (valueInput.value === dataFetch[databaseSelection][randomNumber].translation) {
             replyPopup('rgba(0, 128, 0, 0.527)', 'Правельна відповідь'),
                 numGood++,
@@ -269,7 +272,7 @@ h2Elements.forEach((element) => {
         event.stopPropagation();
         resetHint();
 
-        if (state === true) text.innerText = dataFetch[databaseSelection][randomNumber].word;
+        if (stateLanguage === true) text.innerText = dataFetch[databaseSelection][randomNumber].word;
         else text.innerText = dataFetch[databaseSelection][randomNumber].translation;
     };
 });
@@ -288,6 +291,20 @@ document.body.onclick = function (event) {
         iconModeSwitch = true;
     }
 };
+
+timeSelectionAll.forEach((element, index) => {
+    element.onclick = () => {
+        deleteColorTime();
+        element.classList.add('clock--color');
+        clockTimeHidden();
+        if (index > 0) {
+            timer.innerText = arrayTimerSecond[index];
+            timer.style.display = 'block';
+        } else {
+            timer.style.display = 'none';
+        }
+    };
+});
 
 function toggleHistoryIconVisibility() {
     visibilityIconHistory = iconHistorySwitch ? 'block' : 'none';
