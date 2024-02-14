@@ -1,8 +1,9 @@
-import { numBad, numGood, timeSelectionAll } from './main.js';
+import { numBad, numGood, timeSelectionAll, btnStartPush, btnStartupTimer, hintWord } from './main.js';
 export const historyIconWithoutData = document.querySelector('.history__icon__withoutData');
 export const historyIconData = document.querySelector('.history__icon__data');
-export const valueInput = document.getElementById('myInput');
+export const myInput = document.getElementById('myInput');
 export const clockTime = document.getElementById('clockTime');
+const containerMain = document.querySelector('.container__main');
 export const iconText = ['Випадкові', 'Подорожі', 'Знайомство', `Сім'я`, 'Магазин', 'Зовнішності'];
 export const arrayTimerSecond = ['0', '30', '60', '90'];
 const timeSelection = document.getElementById('timeSelection');
@@ -24,6 +25,15 @@ const deleteColorTime = () => {
     });
 };
 
+const switchMain = (status) => {
+    containerMain.style.display = `${status === 'block' ? 'flex' : 'none'}`;
+    btnStartPush.style.display = status;
+    myInput.style.display = status;
+    hintWord.style.pointerEvents = `${status === 'block' ? 'auto' : 'none'}`;
+    if (status === 'none') btnStartupTimer.style.display = 'block';
+    else btnStartupTimer.style.display = 'none';
+};
+
 const clockTimeHidden = () => {
     let hiddenClock = stateClock ? 'flex' : 'none';
     timeSelection.style.display = `${hiddenClock}`;
@@ -33,7 +43,7 @@ const clockTimeHidden = () => {
 const tegLiLast = function (value_1, value_2, nomination, name) {
     const tegLi = `
     <img width="18px" style="margin-left: 14px" src="/img/${name}.png" alt="" />
-    <b id="icon_nomination">${nomination}.</b><span>${valueInput.value}</span>
+    <b id="icon_nomination">${nomination}.</b><span>${myInput.value}</span>
     <img width="20px" src="/img/icon-right-arrow.png" alt="" />
     <span>${value_1}</span>
     <img width="20px" src="/img/icon-equal-mathematical-sign.png" alt="" />
@@ -64,22 +74,6 @@ function replyPopup(color, text) {
     response.innerText = `${text}`;
 }
 
-function timeOut() {
-    let timeCount = 60;
-    const timerInterval = setInterval(() => {
-        if (timeCount === 0) {
-            clearInterval(timerInterval);
-        } else {
-            time.innerHTML = `${timeCount}`;
-            timeCount--;
-        }
-    }, 1000);
-}
-
-// clockTime.onclick = function () {
-//     timeOut();
-// };
-
 export {
     historyIconHidden,
     tegLiLast,
@@ -89,4 +83,5 @@ export {
     replyPopup,
     deleteColorTime,
     clockTimeHidden,
+    switchMain,
 };

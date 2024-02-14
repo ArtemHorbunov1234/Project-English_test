@@ -1,13 +1,4 @@
-import {
-    historyIconData,
-    historyIconHidden,
-    valueInput,
-    iconText,
-    replyPopup,
-    clockTime,
-    deleteColorTime,
-    clockTimeHidden,
-} from './languageLearningApp.js';
+import { historyIconData, historyIconHidden, myInput, iconText, replyPopup, clockTime } from './languageLearningApp.js';
 import { dataFetch } from './dataFetcher.js';
 import {
     historyIconWithoutData,
@@ -15,10 +6,12 @@ import {
     saveNum,
     meanValueCalculator,
     randomInteger,
-    time,
     arrayTimerSecond,
+    switchMain,
+    deleteColorTime,
+    clockTimeHidden,
 } from './languageLearningApp.js';
-const btnStartPush = document.getElementById('containerBtn');
+export const btnStartPush = document.getElementById('containerBtn');
 const text = document.getElementById('taskText');
 const imgAmendText = document.getElementById('changeImg');
 const controlLanguage = document.getElementById('language');
@@ -42,11 +35,14 @@ const h2Elements = document.querySelectorAll('#icon h2');
 const response = document.getElementById('response');
 const btnMenu = document.getElementById('btnMenu');
 const menuWidgets = document.querySelector('.container__menu__widgets');
-const hintWord = document.getElementById('hintWord');
+export const hintWord = document.getElementById('hintWord');
 const hintBottom = document.getElementById('hintBottom');
 const hintTop = document.getElementById('hintTop');
 export const timeSelectionAll = document.querySelectorAll('#timeSelection b');
 const timer = document.getElementById('timer');
+export const btnStartupTimer = document.getElementById('btnStartupTimer');
+const containerTimer = document.querySelector('.container__timer');
+const resetTimer = document.getElementById('resetTimer');
 
 let databaseSelection = 0;
 let stateLanguage = false;
@@ -58,6 +54,8 @@ let visibilityIconHistory;
 let numberOfCorrectAnswers = 0;
 let stateIconWidgets = false;
 let lengthCalculation = 0;
+let timerCount;
+let timerIndex;
 
 let savedCountCombo = parseInt(localStorage.getItem('countCombo')) || 0;
 let savedNumGood = parseInt(localStorage.getItem('numGood')) || 0;
@@ -140,11 +138,11 @@ controlLanguage.onclick = function () {
     if (stateLanguage) {
         english.classList.add('border');
         text.innerText = dataFetch[databaseSelection][randomNumber].translation;
-        valueInput.placeholder = 'писати англійською';
+        myInput.placeholder = 'писати англійською';
     } else {
         ukraine.classList.add('border');
         text.innerText = dataFetch[databaseSelection][randomNumber].word;
-        valueInput.placeholder = 'писати українською';
+        myInput.placeholder = 'писати українською';
     }
     stateLanguage = !stateLanguage;
     resetHint();
@@ -160,7 +158,7 @@ imgAmendText.onclick = function () {
 btnStartPush.onclick = function () {
     let liLast = document.createElement('li');
     if (stateLanguage === true) {
-        if (valueInput.value === dataFetch[databaseSelection][randomNumber].translation) {
+        if (myInput.value === dataFetch[databaseSelection][randomNumber].translation) {
             replyPopup('rgba(0, 128, 0, 0.527)', 'Правельна відповідь'),
                 numGood++,
                 numberOfCorrectAnswers++,
@@ -180,7 +178,7 @@ btnStartPush.onclick = function () {
         } else {
             replyPopup(
                 '#ff0000ba',
-                `${valueInput.value} не правильна відповідь. Правильна відповідь: ${dataFetch[databaseSelection][randomNumber].translation}  `
+                `${myInput.value} не правильна відповідь. Правильна відповідь: ${dataFetch[databaseSelection][randomNumber].translation}  `
             );
 
             numBad++, (countBad.innerText = numBad);
@@ -201,7 +199,7 @@ btnStartPush.onclick = function () {
         randomNumber = randomInteger(1, 100);
         text.innerText = dataFetch[databaseSelection][randomNumber].word;
     } else {
-        if (valueInput.value === dataFetch[databaseSelection][randomNumber].word) {
+        if (myInput.value === dataFetch[databaseSelection][randomNumber].word) {
             replyPopup('rgba(0, 128, 0, 0.527)', 'Правельна відповідь'),
                 numGood++,
                 numberOfCorrectAnswers++,
@@ -222,7 +220,7 @@ btnStartPush.onclick = function () {
         } else {
             replyPopup(
                 '#ff0000ba',
-                `${valueInput.value} не правильна відповідь. Правильна відповідь: ${dataFetch[databaseSelection][randomNumber].word}  `
+                `${myInput.value} не правильна відповідь. Правильна відповідь: ${dataFetch[databaseSelection][randomNumber].word}  `
             );
 
             numBad++, (countBad.innerText = numBad);
@@ -253,7 +251,7 @@ btnStartPush.onclick = function () {
         btnStartPush.disabled = false;
     }, 4500);
 
-    valueInput.value = '';
+    myInput.value = '';
 };
 iconActive.onclick = function () {
     visibilityIconMode = iconModeSwitch ? 'block' : 'none';
@@ -299,9 +297,14 @@ timeSelectionAll.forEach((element, index) => {
         clockTimeHidden();
         if (index > 0) {
             timer.innerText = arrayTimerSecond[index];
-            timer.style.display = 'block';
+            containerTimer.style.display = 'flex';
+            timerCount = arrayTimerSecond[index];
+            timerIndex = index;
+            switchMain('none');
+            resetHint();
         } else {
-            timer.style.display = 'none';
+            containerTimer.style.display = 'none';
+            switchMain('block');
         }
     };
 });
@@ -310,6 +313,44 @@ function toggleHistoryIconVisibility() {
     visibilityIconHistory = iconHistorySwitch ? 'block' : 'none';
     historyIcon.style.display = visibilityIconHistory;
     iconHistorySwitch = !iconHistorySwitch;
+}
+
+function updateTimer() {
+    timerCount--;
+    timer.innerText = timerCount;
+    if (timerCount <= 0) {
+        stopTimer();
+        clockTime.style.pointerEvents = 'auto';
+    }
+}
+let timerInterval;
+btnStartupTimer.onclick = () => {
+    timerInterval = setInterval(updateTimer, 1000);
+    clockTime.style.pointerEvents = 'none';
+    switchMain('block');
+    controlLanguage.style.pointerEvents = 'none';
+    if (stateLanguage === false) {
+        ukraine.style.color = '#0000006b';
+    } else {
+        english.style.color = '#0000006b';
+    }
+};
+resetTimer.onclick = () => {
+    stopTimer();
+    switchMain('none');
+    resetHint();
+    clockTime.style.pointerEvents = 'auto';
+    controlLanguage.style.pointerEvents = 'auto';
+    ukraine.style.color = 'black';
+    english.style.color = 'black';
+};
+
+function stopTimer() {
+    clearInterval(timerInterval);
+    setTimeout(() => {
+        timer.innerText = arrayTimerSecond[timerIndex];
+        timerCount = arrayTimerSecond[timerIndex];
+    }, 900);
 }
 
 const resetHint = () => {

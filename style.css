@@ -256,9 +256,7 @@ hr {
 }
 
 .history__icon__header {
-    display: flex;
     gap: 7px;
-    align-items: center;
     cursor: pointer;
 }
 
@@ -411,16 +409,33 @@ hr {
     cursor: pointer;
 }
 
-#timer {
+#btnStartupTimer {
     display: none;
-    position: absolute;
-    transform: translate(-1px, -55px);
-    background: #605f7cbd;
+    margin-top: 3.3rem;
+    border-radius: 30px;
+    font-size: 2.5rem;
+}
+
+#timer {
+    font-size: 1.5rem;
+}
+
+.container__timer {
+    animation: timerIn 0.16s ease-in-out forwards;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    background: #605f7cbd;
+    transform: translate(-1px, -55px);
+    position: absolute;
+    display: none;
     padding: 5px 5px 0px 5px;
-    font-size: 1.5rem;
-    animation: timerIn 0.16s ease-in-out forwards;
+    gap: 10px;
+
+    align-items: center;
+}
+
+#resetTimer {
+    cursor: pointer;
 }
 
 #hintWord {

@@ -14,7 +14,11 @@
             <img id="iconStartLoading" width="40px" height="40px" src="/img/ZZ5H.gif" alt="" />
 
             <div class="container" id="activeDisplay">
-                <b id="timer">34</b>
+                <div class="container__timer">
+                    <b id="timer">34</b>
+                    <img id="resetTimer" src="/img/icon-reset.png" width="23px" height="23px" alt="" />
+                </div>
+
                 <div class="container__navigation">
                     <h1 id="mode">
                         Тема: <img src="/img/icon-plan.png" width="20px" height="20px" alt="" />
@@ -52,7 +56,6 @@
                                     <div class="history__icon__top">
                                         <div class="history__icon__header">
                                             <h3>Статистика</h3>
-                                            <img width="15px" height="15px" src="/img/icon-down-arrow.png" alt="" />
                                         </div>
 
                                         <div>
@@ -137,6 +140,7 @@
 
                 <input type="text" id="myInput" value="" placeholder="писати англійською" />
                 <button class="window--btn" id="containerBtn">Push</button>
+                <button class="window--btn" id="btnStartupTimer">Go</button>
             </div>
         </div>
     </body>
