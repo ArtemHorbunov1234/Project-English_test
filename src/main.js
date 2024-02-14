@@ -305,6 +305,8 @@ timeSelectionAll.forEach((element, index) => {
         } else {
             containerTimer.style.display = 'none';
             switchMain('block');
+            ukraine.style.color = 'black';
+            english.style.color = 'black';
         }
     };
 });
@@ -325,7 +327,7 @@ function updateTimer() {
 }
 let timerInterval;
 btnStartupTimer.onclick = () => {
-    timerInterval = setInterval(updateTimer, 1000);
+    timerInterval = setInterval(updateTimer, 100);
     clockTime.style.pointerEvents = 'none';
     switchMain('block');
     controlLanguage.style.pointerEvents = 'none';
