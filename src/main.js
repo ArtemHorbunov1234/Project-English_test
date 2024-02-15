@@ -23,7 +23,7 @@ export const btnStart = document.getElementById('btnStart');
 const display = document.getElementById('activeDisplay');
 const iconActive = document.getElementById('mode');
 const iconMode = document.getElementById('icon');
-const replacementMode = document.getElementById('replacementMode');
+const topicReplacement = document.getElementById('topicReplacement');
 const iconAddTeg = document.getElementById('iconAddTeg');
 const historyIcon = document.getElementById('historyIcon');
 const historyButton = document.getElementById('historyButton');
@@ -42,12 +42,14 @@ export const timeSelectionAll = document.querySelectorAll('#timeSelection b');
 const timer = document.getElementById('timer');
 export const btnStartupTimer = document.getElementById('btnStartupTimer');
 const containerTimer = document.querySelector('.container__timer');
-const resetTimer = document.getElementById('resetTimer');
+const resetTimer = document.querySelectorAll('.container__resetTimer');
+const iconStatsTimerAnswer = document.getElementById('iconStatsTimerAnswer');
+const iconTimerImg = document.getElementById('iconTimerImg');
 
 let databaseSelection = 0;
 let stateLanguage = false;
 let randomNumber;
-let iconModeSwitch = true;
+let iconTopicSwitch = true;
 let iconHistorySwitch = true;
 let visibilityIconMode;
 let visibilityIconHistory;
@@ -56,6 +58,7 @@ let stateIconWidgets = false;
 let lengthCalculation = 0;
 let timerCount;
 let timerIndex;
+let timerInterval;
 
 let savedCountCombo = parseInt(localStorage.getItem('countCombo')) || 0;
 let savedNumGood = parseInt(localStorage.getItem('numGood')) || 0;
@@ -254,19 +257,19 @@ btnStartPush.onclick = function () {
     myInput.value = '';
 };
 iconActive.onclick = function () {
-    visibilityIconMode = iconModeSwitch ? 'block' : 'none';
+    visibilityIconMode = iconTopicSwitch ? 'block' : 'none';
     iconMode.style.display = `${visibilityIconMode}`;
-    iconModeSwitch = !iconModeSwitch;
+    iconTopicSwitch = !iconTopicSwitch;
 };
 
 h2Elements.forEach((element) => {
     element.onclick = function (event) {
-        visibilityIconMode = iconModeSwitch ? 'block' : 'none';
+        visibilityIconMode = iconTopicSwitch ? 'block' : 'none';
         iconMode.style.display = `${visibilityIconMode}`;
-        iconModeSwitch = !iconModeSwitch;
+        iconTopicSwitch = !iconTopicSwitch;
         const dataCountBaseSelection = element.getAttribute('count');
         databaseSelection = dataCountBaseSelection;
-        replacementMode.innerText = iconText[dataCountBaseSelection];
+        topicReplacement.innerText = iconText[dataCountBaseSelection];
         event.stopPropagation();
         resetHint();
 
@@ -284,9 +287,9 @@ document.body.onclick = function (event) {
     if (!historyIcon.contains(event.target) && iconHistorySwitch === false) {
         historyIcon.style.display = 'none';
         iconHistorySwitch = true;
-    } else if (!iconActive.contains(event.target) && iconModeSwitch === false) {
+    } else if (!iconActive.contains(event.target) && iconTopicSwitch === false) {
         iconMode.style.display = 'none';
-        iconModeSwitch = true;
+        iconTopicSwitch = true;
     }
 };
 
@@ -323,9 +326,11 @@ function updateTimer() {
     if (timerCount <= 0) {
         stopTimer();
         clockTime.style.pointerEvents = 'auto';
+        iconStatsTimerAnswer.style.display = 'flex';
+        hintWord.style.pointerEvents = 'none';
+        iconTimerImg.style.pointerEvents = 'none';
     }
 }
-let timerInterval;
 btnStartupTimer.onclick = () => {
     timerInterval = setInterval(updateTimer, 100);
     clockTime.style.pointerEvents = 'none';
@@ -337,15 +342,22 @@ btnStartupTimer.onclick = () => {
         english.style.color = '#0000006b';
     }
 };
-resetTimer.onclick = () => {
-    stopTimer();
-    switchMain('none');
-    resetHint();
-    clockTime.style.pointerEvents = 'auto';
-    controlLanguage.style.pointerEvents = 'auto';
-    ukraine.style.color = 'black';
-    english.style.color = 'black';
-};
+
+resetTimer.forEach((btn, index) => {
+    btn.onclick = () => {
+        stopTimer();
+        switchMain('none');
+        resetHint();
+        clockTime.style.pointerEvents = 'auto';
+        controlLanguage.style.pointerEvents = 'auto';
+        ukraine.style.color = 'black';
+        english.style.color = 'black';
+        if (index !== 0) {
+            iconStatsTimerAnswer.style.display = 'none';
+            hintWord.style.pointerEvents = 'auto';
+        }
+    };
+});
 
 function stopTimer() {
     clearInterval(timerInterval);

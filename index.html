@@ -16,14 +16,21 @@
             <div class="container" id="activeDisplay">
                 <div class="container__timer">
                     <b id="timer">34</b>
-                    <img id="resetTimer" src="/img/icon-reset.png" width="23px" height="23px" alt="" />
+                    <img
+                        id="iconTimerImg"
+                        class="container__resetTimer"
+                        src="/img/icon-reset.png"
+                        width="23px"
+                        height="23px"
+                        alt=""
+                    />
                 </div>
 
                 <div class="container__navigation">
                     <h1 id="mode">
-                        Тема: <img src="/img/icon-plan.png" width="20px" height="20px" alt="" />
+                        Тема: <img src="/img/icon-plan.png" width="20px" height="20px" alt="plan" />
                         <br />
-                        <span id="replacementMode">Випадкові </span>
+                        <span id="topicReplacement">Випадкові </span>
                     </h1>
                     <div id="icon">
                         <h2 count="0">Випадкові</h2>
@@ -124,9 +131,49 @@
                                 <b>60sec</b>
                                 <b>90sec</b>
                             </div>
-
-                            <!-- <b id="time">0</b> -->
                         </div>
+                    </div>
+                </div>
+                <div id="iconStatsTimerAnswer">
+                    <div class="container__statsTimer__top">
+                        <div class="container__statsTimer__answer-counter">
+                            <div>
+                                <img width="34px" src="/img/good.png" alt="" />
+                                <h3>0</h3>
+                            </div>
+                            <div>
+                                <img width="34px" src="/img/bad.png" alt="" />
+                                <h3>0</h3>
+                            </div>
+                        </div>
+                        <img
+                            class="container__resetTimer"
+                            width="25px"
+                            id="iconStatsTimerBtnClose"
+                            src="/img/icon-close-button.png"
+                            alt="close"
+                        />
+                    </div>
+                    <hr class="container__statsTimer__line" />
+                    <h2>Статистика</h2>
+
+                    <div class="container__statsTimer__middle">
+                        <h3>
+                            Середній коеф:
+                            <b id="statsAverage">0</b>%
+                        </h3>
+                        <h3>
+                            Kombo:
+                            <b id="statsCombo">0</b>
+                        </h3>
+                        <h3>
+                            Кількість використаних підказок:
+                            <b id="statsHint">0</b>
+                        </h3>
+                    </div>
+                    <div class="container__statsTimer__bottom">
+                        <button class="statsTimer--btn container__resetTimer">Спробудвати ще</button>
+                        <button class="statsTimer--btn">відключити таймер</button>
                     </div>
                 </div>
 
