@@ -520,7 +520,7 @@ hr {
 
 .container__statsTimer__bottom {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .container__statsTimer__answer-counter {

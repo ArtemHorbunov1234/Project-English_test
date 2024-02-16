@@ -1,4 +1,17 @@
-import { numBad, numGood, timeSelectionAll, btnStartPush, btnStartupTimer, hintWord } from './main.js';
+import {
+    numBad,
+    numGood,
+    timeSelectionAll,
+    btnStartPush,
+    btnStartupTimer,
+    hintWord,
+    controlLanguage,
+    iconActive,
+    historyButton,
+    ukraine,
+    english,
+} from './main.js';
+
 export const historyIconWithoutData = document.querySelector('.history__icon__withoutData');
 export const historyIconData = document.querySelector('.history__icon__data');
 export const myInput = document.getElementById('myInput');
@@ -6,8 +19,13 @@ export const clockTime = document.getElementById('clockTime');
 const containerMain = document.querySelector('.container__main');
 export const iconText = ['Випадкові', 'Подорожі', 'Знайомство', `Сім'я`, 'Магазин', 'Зовнішності'];
 export const arrayTimerSecond = ['0', '30', '60', '90'];
+export const historyIcon = document.getElementById('historyIcon');
+
 const timeSelection = document.getElementById('timeSelection');
+let visibilityIconHistory;
+export let iconHistorySwitch = true;
 let stateClock = false;
+
 const historyIconHidden = () => {
     const sumNum = numGood + numBad;
     if (sumNum >= 1) {
@@ -24,6 +42,21 @@ const deleteColorTime = () => {
         element.classList.remove('clock--color');
     });
 };
+
+const hiddenPointerEvents = () => {
+    clockTime.style.pointerEvents = 'auto';
+    controlLanguage.style.pointerEvents = 'auto';
+    iconActive.style.pointerEvents = 'auto';
+    historyButton.style.pointerEvents = 'auto';
+    ukraine.style.color = 'black';
+    english.style.color = 'black';
+};
+
+function toggleHistoryIconVisibility() {
+    visibilityIconHistory = iconHistorySwitch ? 'block' : 'none';
+    historyIcon.style.display = visibilityIconHistory;
+    iconHistorySwitch = !iconHistorySwitch;
+}
 
 const switchMain = (status) => {
     containerMain.style.display = `${status === 'block' ? 'flex' : 'none'}`;
@@ -84,4 +117,6 @@ export {
     deleteColorTime,
     clockTimeHidden,
     switchMain,
+    hiddenPointerEvents,
+    toggleHistoryIconVisibility,
 };

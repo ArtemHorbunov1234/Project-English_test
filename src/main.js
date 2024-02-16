@@ -1,4 +1,13 @@
-import { historyIconData, historyIconHidden, myInput, iconText, replyPopup, clockTime } from './languageLearningApp.js';
+import {
+    historyIconData,
+    historyIconHidden,
+    myInput,
+    iconText,
+    replyPopup,
+    clockTime,
+    iconHistorySwitch,
+    historyIcon,
+} from './languageLearningApp.js';
 import { dataFetch } from './dataFetcher.js';
 import {
     historyIconWithoutData,
@@ -10,23 +19,24 @@ import {
     switchMain,
     deleteColorTime,
     clockTimeHidden,
+    hiddenPointerEvents,
+    toggleHistoryIconVisibility,
 } from './languageLearningApp.js';
 export const btnStartPush = document.getElementById('containerBtn');
 const text = document.getElementById('taskText');
 const imgAmendText = document.getElementById('changeImg');
-const controlLanguage = document.getElementById('language');
-const english = document.getElementById('languageEnglish');
-const ukraine = document.getElementById('languageUkr');
+export const controlLanguage = document.getElementById('language');
+export const english = document.getElementById('languageEnglish');
+export const ukraine = document.getElementById('languageUkr');
 const countBad = document.getElementById('countBabReply');
 const countGood = document.getElementById('countGoodReply');
 export const btnStart = document.getElementById('btnStart');
 const display = document.getElementById('activeDisplay');
-const iconActive = document.getElementById('mode');
+export const iconActive = document.getElementById('mode');
 const iconMode = document.getElementById('icon');
 const topicReplacement = document.getElementById('topicReplacement');
 const iconAddTeg = document.getElementById('iconAddTeg');
-const historyIcon = document.getElementById('historyIcon');
-const historyButton = document.getElementById('historyButton');
+export const historyButton = document.getElementById('historyButton');
 const iconMeanValue = document.getElementById('iconMeanValue');
 const countCombo = document.getElementById('countCombo');
 const historyIconBtnClear = document.getElementById('historyIconBtnClear');
@@ -36,8 +46,8 @@ const response = document.getElementById('response');
 const btnMenu = document.getElementById('btnMenu');
 const menuWidgets = document.querySelector('.container__menu__widgets');
 export const hintWord = document.getElementById('hintWord');
-const hintBottom = document.getElementById('hintBottom');
-const hintTop = document.getElementById('hintTop');
+export const hintBottom = document.getElementById('hintBottom');
+export const hintTop = document.getElementById('hintTop');
 export const timeSelectionAll = document.querySelectorAll('#timeSelection b');
 const timer = document.getElementById('timer');
 export const btnStartupTimer = document.getElementById('btnStartupTimer');
@@ -45,20 +55,19 @@ const containerTimer = document.querySelector('.container__timer');
 const resetTimer = document.querySelectorAll('.container__resetTimer');
 const iconStatsTimerAnswer = document.getElementById('iconStatsTimerAnswer');
 const iconTimerImg = document.getElementById('iconTimerImg');
-
+const iconStatsTimerBtnClose = document.getElementById('iconStatsTimerBtnClose');
 let databaseSelection = 0;
 let stateLanguage = false;
 let randomNumber;
 let iconTopicSwitch = true;
-let iconHistorySwitch = true;
 let visibilityIconMode;
-let visibilityIconHistory;
+let timerInterval;
+let timerIndex;
+let timerCount;
+let lengthCalculation = 0;
+
 let numberOfCorrectAnswers = 0;
 let stateIconWidgets = false;
-let lengthCalculation = 0;
-let timerCount;
-let timerIndex;
-let timerInterval;
 
 let savedCountCombo = parseInt(localStorage.getItem('countCombo')) || 0;
 let savedNumGood = parseInt(localStorage.getItem('numGood')) || 0;
@@ -298,13 +307,15 @@ timeSelectionAll.forEach((element, index) => {
         deleteColorTime();
         element.classList.add('clock--color');
         clockTimeHidden();
+
         if (index > 0) {
             timer.innerText = arrayTimerSecond[index];
             containerTimer.style.display = 'flex';
-            timerCount = arrayTimerSecond[index];
             timerIndex = index;
             switchMain('none');
             resetHint();
+            console.log(index);
+            timerCount = arrayTimerSecond[index];
         } else {
             containerTimer.style.display = 'none';
             switchMain('block');
@@ -314,33 +325,24 @@ timeSelectionAll.forEach((element, index) => {
     };
 });
 
-function toggleHistoryIconVisibility() {
-    visibilityIconHistory = iconHistorySwitch ? 'block' : 'none';
-    historyIcon.style.display = visibilityIconHistory;
-    iconHistorySwitch = !iconHistorySwitch;
-}
-
-function updateTimer() {
-    timerCount--;
-    timer.innerText = timerCount;
-    if (timerCount <= 0) {
-        stopTimer();
-        clockTime.style.pointerEvents = 'auto';
-        iconStatsTimerAnswer.style.display = 'flex';
-        hintWord.style.pointerEvents = 'none';
-        iconTimerImg.style.pointerEvents = 'none';
-    }
-}
 btnStartupTimer.onclick = () => {
     timerInterval = setInterval(updateTimer, 100);
     clockTime.style.pointerEvents = 'none';
     switchMain('block');
     controlLanguage.style.pointerEvents = 'none';
+    iconActive.style.pointerEvents = 'none';
+    historyButton.style.pointerEvents = 'none';
+
     if (stateLanguage === false) {
         ukraine.style.color = '#0000006b';
     } else {
         english.style.color = '#0000006b';
     }
+};
+const resetHint = () => {
+    hintBottom.style.display = 'none';
+    hintTop.style.display = 'none';
+    lengthCalculation = 0;
 };
 
 resetTimer.forEach((btn, index) => {
@@ -348,16 +350,36 @@ resetTimer.forEach((btn, index) => {
         stopTimer();
         switchMain('none');
         resetHint();
-        clockTime.style.pointerEvents = 'auto';
-        controlLanguage.style.pointerEvents = 'auto';
-        ukraine.style.color = 'black';
-        english.style.color = 'black';
+        hiddenPointerEvents();
+        hintBottom.style.pointerEvents = 'auto';
         if (index !== 0) {
             iconStatsTimerAnswer.style.display = 'none';
-            hintWord.style.pointerEvents = 'auto';
+            iconTimerImg.style.pointerEvents = 'auto';
         }
     };
 });
+
+iconStatsTimerBtnClose.onclick = () => {
+    containerTimer.style.display = 'none';
+    switchMain('block');
+    hiddenPointerEvents();
+    deleteColorTime();
+    iconStatsTimerAnswer.style.display = 'none';
+    iconTimerImg.style.pointerEvents = 'auto';
+    timeSelectionAll[0].classList.add('clock--color');
+    timerIndex = 0;
+};
+
+function updateTimer() {
+    timerCount--;
+    timer.innerText = timerCount;
+    if (timerCount <= 0) {
+        stopTimer();
+        iconStatsTimerAnswer.style.display = 'flex';
+        hintWord.style.pointerEvents = 'none';
+        iconTimerImg.style.pointerEvents = 'none';
+    }
+}
 
 function stopTimer() {
     clearInterval(timerInterval);
@@ -366,9 +388,3 @@ function stopTimer() {
         timerCount = arrayTimerSecond[timerIndex];
     }, 900);
 }
-
-const resetHint = () => {
-    hintBottom.style.display = 'none';
-    hintTop.style.display = 'none';
-    lengthCalculation = 0;
-};
