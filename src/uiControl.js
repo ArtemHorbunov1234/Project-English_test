@@ -90,11 +90,17 @@ const saveNum = (numGood, numBad) => {
     localStorage.setItem('numBad', numBad);
 };
 
-const meanValueCalculator = (countReplyGood, countReplyBad) => {
-    const sumTask = countReplyBad + countReplyGood;
-    const meanValue = ((countReplyGood / sumTask) * 100).toFixed(1);
-    localStorage.setItem('meanValue', meanValue);
-    return meanValue;
+const meanValueCalculator = (countReplyGood, countReplyBad, icon) => {
+    if (icon === 'history') {
+        const sumTask = countReplyBad + countReplyGood;
+        const meanValue = ((countReplyGood / sumTask) * 100).toFixed(1);
+        localStorage.setItem('meanValue', meanValue);
+        return meanValue;
+    } else {
+        const sumTask = countReplyBad + countReplyGood;
+        const meanValue = ((countReplyGood / sumTask) * 100).toFixed(1);
+        return meanValue >= 0 ? meanValue : 0;
+    }
 };
 
 function randomInteger(min, max) {

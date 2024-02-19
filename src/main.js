@@ -7,7 +7,7 @@ import {
     clockTime,
     iconHistorySwitch,
     historyIcon,
-} from './languageLearningApp.js';
+} from './uiControl.js';
 import { dataFetch } from './dataFetcher.js';
 import {
     historyIconWithoutData,
@@ -21,7 +21,7 @@ import {
     clockTimeHidden,
     hiddenPointerEvents,
     toggleHistoryIconVisibility,
-} from './languageLearningApp.js';
+} from './uiControl.js';
 export const btnStartPush = document.getElementById('containerBtn');
 const text = document.getElementById('taskText');
 const imgAmendText = document.getElementById('changeImg');
@@ -31,7 +31,7 @@ export const ukraine = document.getElementById('languageUkr');
 const countBad = document.getElementById('countBabReply');
 const countGood = document.getElementById('countGoodReply');
 export const btnStart = document.getElementById('btnStart');
-const display = document.getElementById('activeDisplay');
+const activeContainer = document.getElementById('activeContainer');
 export const iconActive = document.getElementById('mode');
 const iconMode = document.getElementById('icon');
 const topicReplacement = document.getElementById('topicReplacement');
@@ -56,16 +56,26 @@ const resetTimer = document.querySelectorAll('.container__resetTimer');
 const iconStatsTimerAnswer = document.getElementById('iconStatsTimerAnswer');
 const iconTimerImg = document.getElementById('iconTimerImg');
 const iconStatsTimerBtnClose = document.getElementById('iconStatsTimerBtnClose');
+const statsCountGood = document.getElementById('statsCountGood');
+const statsCountBad = document.getElementById('statsCountBad');
+const statsAverage = document.getElementById('statsAverage');
+const statsCombo = document.getElementById('statsCombo');
+const statsHint = document.getElementById('statsHint');
+
 let databaseSelection = 0;
 let stateLanguage = false;
 let randomNumber;
 let iconTopicSwitch = true;
 let visibilityIconMode;
 let timerInterval;
-let timerIndex;
+let timerIndex = 0;
 let timerCount;
 let lengthCalculation = 0;
-
+let statsNumGood = 0;
+let statsNumBad = 0;
+let statsCountCombo = 0;
+let statsCountHint = 0;
+let sumStatsCountHint = 0;
 let numberOfCorrectAnswers = 0;
 let stateIconWidgets = false;
 
@@ -84,7 +94,7 @@ historyIconHidden();
 
 btnStart.onclick = function () {
     btnStart.style.display = 'none';
-    display.style.display = 'flex';
+    activeContainer.style.display = 'flex';
     randomNumber = randomInteger(1, 100);
     text.innerText = dataFetch[0][randomNumber].translation;
     for (let a = 0; a <= numGood + numBad; a++) {
@@ -115,7 +125,6 @@ hintWord.addEventListener('click', function () {
     let keyText = stateLanguage ? 'translation' : 'word';
     const b = dataFetch[databaseSelection][randomNumber][keyText].length;
     array.push(' _ '.repeat(b));
-
     while (lengthCalculation >= a) {
         array_text.push(dataFetch[databaseSelection][randomNumber][keyText][`${a}`]);
         a++;
@@ -123,11 +132,10 @@ hintWord.addEventListener('click', function () {
     while (b > array_text.length) {
         array_text.push(` # `);
     }
-
     hintBottom.innerText = array.join('');
     hintTop.innerText = array_text.join(' ');
-
     lengthCalculation++;
+    if (timerIndex !== 0) statsCountHint = array_text.filter((a) => a !== ' # ' && a !== undefined).length;
 });
 
 historyIconBtnClear.onclick = function () {
@@ -168,9 +176,12 @@ imgAmendText.onclick = function () {
 };
 
 btnStartPush.onclick = function () {
+    statsCombo.innerText = statsCountCombo;
     let liLast = document.createElement('li');
     if (stateLanguage === true) {
         if (myInput.value === dataFetch[databaseSelection][randomNumber].translation) {
+            statsNumGood = timerIndex > 0 ? statsNumGood + 1 : statsNumGood;
+            statsCountCombo = timerIndex > 0 ? statsCountCombo + 1 : 0;
             replyPopup('rgba(0, 128, 0, 0.527)', 'Правельна відповідь'),
                 numGood++,
                 numberOfCorrectAnswers++,
@@ -178,7 +189,7 @@ btnStartPush.onclick = function () {
             countCombo.innerText =
                 numberOfCorrectAnswers > countCombo.innerText ? numberOfCorrectAnswers : countCombo.innerText;
             localStorage.setItem('countCombo', `${countCombo.innerText}`);
-            iconMeanValue.innerText = meanValueCalculator(numGood, numBad);
+            iconMeanValue.innerText = meanValueCalculator(numGood, numBad, 'history');
             saveNum(numGood, numBad);
             liLast.innerHTML = tegLiLast(
                 dataFetch[databaseSelection][randomNumber].translation,
@@ -192,11 +203,13 @@ btnStartPush.onclick = function () {
                 '#ff0000ba',
                 `${myInput.value} не правильна відповідь. Правильна відповідь: ${dataFetch[databaseSelection][randomNumber].translation}  `
             );
-
+            statsNumBad = timerIndex > 0 ? statsNumBad + 1 : statsNumBad;
+            statsCombo.innerText = statsCountCombo > statsCombo.innerHTML ? statsCountCombo : statsCombo.innerHTML;
+            statsCountCombo = 0;
             numBad++, (countBad.innerText = numBad);
             numberOfCorrectAnswers > countCombo.innerText ? numberOfCorrectAnswers : countCombo.innerText;
             numberOfCorrectAnswers = 0;
-            iconMeanValue.innerText = meanValueCalculator(numGood, numBad);
+            iconMeanValue.innerText = meanValueCalculator(numGood, numBad, 'history');
             saveNum(numGood, numBad);
 
             liLast.innerHTML = tegLiLast(
@@ -212,11 +225,14 @@ btnStartPush.onclick = function () {
         text.innerText = dataFetch[databaseSelection][randomNumber].word;
     } else {
         if (myInput.value === dataFetch[databaseSelection][randomNumber].word) {
+            statsNumGood = timerIndex > 0 ? statsNumGood + 1 : statsNumGood;
+            statsCountCombo = timerIndex > 0 ? statsCountCombo + 1 : 0;
+
             replyPopup('rgba(0, 128, 0, 0.527)', 'Правельна відповідь'),
                 numGood++,
                 numberOfCorrectAnswers++,
                 (countGood.innerText = numGood);
-            iconMeanValue.innerText = meanValueCalculator(numGood, numBad);
+            iconMeanValue.innerText = meanValueCalculator(numGood, numBad, 'history');
             saveNum(numGood, numBad);
 
             countCombo.innerText =
@@ -234,13 +250,16 @@ btnStartPush.onclick = function () {
                 '#ff0000ba',
                 `${myInput.value} не правильна відповідь. Правильна відповідь: ${dataFetch[databaseSelection][randomNumber].word}  `
             );
+            statsNumBad = timerIndex > 0 ? statsNumBad + 1 : statsNumBad;
+            statsCombo.innerText = statsCountCombo > statsCombo.innerHTML ? statsCountCombo : statsCombo.innerHTML;
+            statsCountCombo = 0;
 
             numBad++, (countBad.innerText = numBad);
             saveNum(numGood, numBad);
 
             numberOfCorrectAnswers > countCombo.innerText ? numberOfCorrectAnswers : countCombo.innerText;
             numberOfCorrectAnswers = 0;
-            iconMeanValue.innerText = meanValueCalculator(numGood, numBad);
+            iconMeanValue.innerText = meanValueCalculator(numGood, numBad, 'history');
 
             liLast.innerHTML = tegLiLast(
                 dataFetch[databaseSelection][randomNumber].word,
@@ -258,11 +277,20 @@ btnStartPush.onclick = function () {
     historyIconHidden();
     btnStartPush.disabled = true;
 
-    setTimeout(() => {
-        response.style.opacity = '0';
-        btnStartPush.disabled = false;
-    }, 4500);
-
+    if (timerIndex === 0) {
+        setTimeout(() => {
+            response.style.opacity = '0';
+            btnStartPush.disabled = false;
+        }, 4500);
+    } else {
+        sumStatsCountHint += statsCountHint;
+        statsCountHint = 0;
+        console.log(sumStatsCountHint);
+        setTimeout(() => {
+            response.style.opacity = '0';
+            btnStartPush.disabled = false;
+        }, 1200);
+    }
     myInput.value = '';
 };
 iconActive.onclick = function () {
@@ -314,9 +342,9 @@ timeSelectionAll.forEach((element, index) => {
             timerIndex = index;
             switchMain('none');
             resetHint();
-            console.log(index);
             timerCount = arrayTimerSecond[index];
         } else {
+            timerIndex = index;
             containerTimer.style.display = 'none';
             switchMain('block');
             ukraine.style.color = 'black';
@@ -378,6 +406,17 @@ function updateTimer() {
         iconStatsTimerAnswer.style.display = 'flex';
         hintWord.style.pointerEvents = 'none';
         iconTimerImg.style.pointerEvents = 'none';
+        statsAverage.innerHTML = meanValueCalculator(statsNumGood, statsNumBad, 'stats');
+        statsCountGood.innerHTML = statsNumGood;
+        statsCountBad.innerHTML = statsNumBad;
+        statsCombo.innerText = statsCountCombo > statsCombo.innerText ? statsCountCombo : statsCombo.innerText;
+        sumStatsCountHint += statsCountHint;
+        statsHint.innerHTML = sumStatsCountHint;
+        statsCountHint = 0;
+        sumStatsCountHint = 0;
+        statsNumGood = 0;
+        statsNumBad = 0;
+        statsCountCombo = 0;
     }
 }
 
