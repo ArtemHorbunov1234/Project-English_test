@@ -7,6 +7,8 @@ import {
     clockTime,
     iconHistorySwitch,
     historyIcon,
+    stateClock,
+    iconTopicSwitch,
 } from './uiControl.js';
 import { dataFetch } from './dataFetcher.js';
 import {
@@ -21,6 +23,7 @@ import {
     clockTimeHidden,
     hiddenPointerEvents,
     toggleHistoryIconVisibility,
+    iconModeHidden,
 } from './uiControl.js';
 export const btnStartPush = document.getElementById('containerBtn');
 const text = document.getElementById('taskText');
@@ -33,7 +36,7 @@ const countGood = document.getElementById('countGoodReply');
 export const btnStart = document.getElementById('btnStart');
 const activeContainer = document.getElementById('activeContainer');
 export const iconActive = document.getElementById('mode');
-const iconMode = document.getElementById('icon');
+export const iconMode = document.getElementById('icon');
 const topicReplacement = document.getElementById('topicReplacement');
 const iconAddTeg = document.getElementById('iconAddTeg');
 export const historyButton = document.getElementById('historyButton');
@@ -61,12 +64,10 @@ const statsCountBad = document.getElementById('statsCountBad');
 const statsAverage = document.getElementById('statsAverage');
 const statsCombo = document.getElementById('statsCombo');
 const statsHint = document.getElementById('statsHint');
-
+document.querySelector('#historyButton').disabled = false;
 let databaseSelection = 0;
 let stateLanguage = false;
 let randomNumber;
-let iconTopicSwitch = true;
-let visibilityIconMode;
 let timerInterval;
 let timerIndex = 0;
 let timerCount;
@@ -182,7 +183,7 @@ btnStartPush.onclick = function () {
         if (myInput.value === dataFetch[databaseSelection][randomNumber].translation) {
             statsNumGood = timerIndex > 0 ? statsNumGood + 1 : statsNumGood;
             statsCountCombo = timerIndex > 0 ? statsCountCombo + 1 : 0;
-            replyPopup('rgba(0, 128, 0, 0.527)', 'Правельна відповідь'),
+            replyPopup('rgba(0, 128, 0, 0.527)', 'Правильна відповідь'),
                 numGood++,
                 numberOfCorrectAnswers++,
                 (countGood.innerText = numGood);
@@ -228,7 +229,7 @@ btnStartPush.onclick = function () {
             statsNumGood = timerIndex > 0 ? statsNumGood + 1 : statsNumGood;
             statsCountCombo = timerIndex > 0 ? statsCountCombo + 1 : 0;
 
-            replyPopup('rgba(0, 128, 0, 0.527)', 'Правельна відповідь'),
+            replyPopup('rgba(0, 128, 0, 0.527)', 'Правильна відповідь'),
                 numGood++,
                 numberOfCorrectAnswers++,
                 (countGood.innerText = numGood);
@@ -285,7 +286,6 @@ btnStartPush.onclick = function () {
     } else {
         sumStatsCountHint += statsCountHint;
         statsCountHint = 0;
-        console.log(sumStatsCountHint);
         setTimeout(() => {
             response.style.opacity = '0';
             btnStartPush.disabled = false;
@@ -294,16 +294,12 @@ btnStartPush.onclick = function () {
     myInput.value = '';
 };
 iconActive.onclick = function () {
-    visibilityIconMode = iconTopicSwitch ? 'block' : 'none';
-    iconMode.style.display = `${visibilityIconMode}`;
-    iconTopicSwitch = !iconTopicSwitch;
+    iconModeHidden();
 };
 
 h2Elements.forEach((element) => {
     element.onclick = function (event) {
-        visibilityIconMode = iconTopicSwitch ? 'block' : 'none';
-        iconMode.style.display = `${visibilityIconMode}`;
-        iconTopicSwitch = !iconTopicSwitch;
+        iconModeHidden();
         const dataCountBaseSelection = element.getAttribute('count');
         databaseSelection = dataCountBaseSelection;
         topicReplacement.innerText = iconText[dataCountBaseSelection];
@@ -322,11 +318,11 @@ historyButton.onclick = function (event) {
 
 document.body.onclick = function (event) {
     if (!historyIcon.contains(event.target) && iconHistorySwitch === false) {
-        historyIcon.style.display = 'none';
-        iconHistorySwitch = true;
+        toggleHistoryIconVisibility();
     } else if (!iconActive.contains(event.target) && iconTopicSwitch === false) {
-        iconMode.style.display = 'none';
-        iconTopicSwitch = true;
+        iconModeHidden();
+    } else if (!clockTime.contains(event.target) && stateClock === false) {
+        clockTimeHidden();
     }
 };
 
@@ -359,7 +355,8 @@ btnStartupTimer.onclick = () => {
     switchMain('block');
     controlLanguage.style.pointerEvents = 'none';
     iconActive.style.pointerEvents = 'none';
-    historyButton.style.pointerEvents = 'none';
+    historyButton.disabled = true;
+    topicReplacement.style.color = '#0000006b';
 
     if (stateLanguage === false) {
         ukraine.style.color = '#0000006b';
@@ -380,6 +377,7 @@ resetTimer.forEach((btn, index) => {
         resetHint();
         hiddenPointerEvents();
         hintBottom.style.pointerEvents = 'auto';
+        topicReplacement.style.color = 'black';
         if (index !== 0) {
             iconStatsTimerAnswer.style.display = 'none';
             iconTimerImg.style.pointerEvents = 'auto';
@@ -392,6 +390,7 @@ iconStatsTimerBtnClose.onclick = () => {
     switchMain('block');
     hiddenPointerEvents();
     deleteColorTime();
+    topicReplacement.style.color = 'black';
     iconStatsTimerAnswer.style.display = 'none';
     iconTimerImg.style.pointerEvents = 'auto';
     timeSelectionAll[0].classList.add('clock--color');

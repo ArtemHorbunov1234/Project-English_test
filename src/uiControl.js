@@ -10,6 +10,7 @@ import {
     historyButton,
     ukraine,
     english,
+    iconMode,
 } from './main.js';
 
 export const historyIconWithoutData = document.querySelector('.history__icon__withoutData');
@@ -20,11 +21,18 @@ const containerMain = document.querySelector('.container__main');
 export const iconText = ['Випадкові', 'Подорожі', 'Знайомство', `Сім'я`, 'Магазин', 'Зовнішності'];
 export const arrayTimerSecond = ['0', '30', '60', '90'];
 export const historyIcon = document.getElementById('historyIcon');
-
 const timeSelection = document.getElementById('timeSelection');
 let visibilityIconHistory;
 export let iconHistorySwitch = true;
-let stateClock = false;
+export let stateClock = false;
+export let iconTopicSwitch = true;
+export let visibilityIconMode;
+
+const iconModeHidden = () => {
+    visibilityIconMode = iconTopicSwitch ? 'block' : 'none';
+    iconMode.style.display = `${visibilityIconMode}`;
+    iconTopicSwitch = !iconTopicSwitch;
+};
 
 const historyIconHidden = () => {
     const sumNum = numGood + numBad;
@@ -47,7 +55,7 @@ const hiddenPointerEvents = () => {
     clockTime.style.pointerEvents = 'auto';
     controlLanguage.style.pointerEvents = 'auto';
     iconActive.style.pointerEvents = 'auto';
-    historyButton.style.pointerEvents = 'auto';
+    historyButton.disabled = false;
     ukraine.style.color = 'black';
     english.style.color = 'black';
 };
@@ -125,4 +133,5 @@ export {
     switchMain,
     hiddenPointerEvents,
     toggleHistoryIconVisibility,
+    iconModeHidden,
 };
