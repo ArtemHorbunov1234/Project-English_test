@@ -35,8 +35,8 @@ const countBad = document.getElementById('countBabReply');
 const countGood = document.getElementById('countGoodReply');
 export const btnStart = document.getElementById('btnStart');
 const activeContainer = document.getElementById('activeContainer');
-export const iconActive = document.getElementById('mode');
-export const iconMode = document.getElementById('icon');
+export const topic = document.getElementById('topic');
+export const iconTopic = document.getElementById('iconTopic');
 const topicReplacement = document.getElementById('topicReplacement');
 const iconAddTeg = document.getElementById('iconAddTeg');
 export const historyButton = document.getElementById('historyButton');
@@ -44,7 +44,7 @@ const iconMeanValue = document.getElementById('iconMeanValue');
 const countCombo = document.getElementById('countCombo');
 const historyIconBtnClear = document.getElementById('historyIconBtnClear');
 const divElement = document.querySelector('#iconAddTeg');
-const h2Elements = document.querySelectorAll('#icon h2');
+const h2TopicElements = document.querySelectorAll('#iconTopic h2');
 const response = document.getElementById('response');
 const btnMenu = document.getElementById('btnMenu');
 const menuWidgets = document.querySelector('.container__menu__widgets');
@@ -293,11 +293,11 @@ btnStartPush.onclick = function () {
     }
     myInput.value = '';
 };
-iconActive.onclick = function () {
+topic.onclick = function () {
     iconModeHidden();
 };
 
-h2Elements.forEach((element) => {
+h2TopicElements.forEach((element) => {
     element.onclick = function (event) {
         iconModeHidden();
         const dataCountBaseSelection = element.getAttribute('count');
@@ -319,7 +319,7 @@ historyButton.onclick = function (event) {
 document.body.onclick = function (event) {
     if (!historyIcon.contains(event.target) && iconHistorySwitch === false) {
         toggleHistoryIconVisibility();
-    } else if (!iconActive.contains(event.target) && iconTopicSwitch === false) {
+    } else if (!topic.contains(event.target) && iconTopicSwitch === false) {
         iconModeHidden();
     } else if (!clockTime.contains(event.target) && stateClock === false) {
         clockTimeHidden();
@@ -350,11 +350,11 @@ timeSelectionAll.forEach((element, index) => {
 });
 
 btnStartupTimer.onclick = () => {
-    timerInterval = setInterval(updateTimer, 100);
+    timerInterval = setInterval(updateTimer, 1000);
     clockTime.style.pointerEvents = 'none';
     switchMain('block');
     controlLanguage.style.pointerEvents = 'none';
-    iconActive.style.pointerEvents = 'none';
+    topic.style.pointerEvents = 'none';
     historyButton.disabled = true;
     topicReplacement.style.color = '#0000006b';
 

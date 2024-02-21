@@ -61,36 +61,36 @@ body {
     gap: 5px;
 }
 
-#icon > h2 {
+#iconTopic > h2 {
     font-size: 1.3rem;
     border: solid 1px;
     cursor: pointer;
     animation: slideIn 0.16s ease-in-out forwards;
     opacity: 0;
 }
-#icon > h2:nth-child(0) {
+#iconTopic > h2:nth-child(0) {
     animation-delay: 0.1s;
 }
-#icon > h2:nth-child(1) {
+#iconTopic > h2:nth-child(1) {
     animation-delay: 0.2s;
 }
-#icon > h2:nth-child(2) {
+#iconTopic > h2:nth-child(2) {
     animation-delay: 0.3s;
 }
-#icon > h2:nth-child(3) {
+#iconTopic > h2:nth-child(3) {
     animation-delay: 0.4s;
 }
-#icon > h2:nth-child(4) {
+#iconTopic > h2:nth-child(4) {
     animation-delay: 0.5s;
 }
-#icon > h2:nth-child(5) {
+#iconTopic > h2:nth-child(5) {
     animation-delay: 0.6s;
 }
-#icon > h2:nth-child(6) {
+#iconTopic > h2:nth-child(6) {
     animation-delay: 0.7s;
 }
 
-#icon > h2:hover {
+#iconTopic > h2:hover {
     background-color: rgba(79, 87, 94, 0.541);
 }
 
@@ -330,7 +330,7 @@ hr {
     cursor: pointer;
 }
 
-#mode {
+#topic {
     cursor: pointer;
     user-select: none;
     width: 90px;
@@ -354,7 +354,7 @@ hr {
     opacity: 0;
 }
 
-#icon {
+#iconTopic {
     display: none;
     position: absolute;
     background-color: aliceblue;

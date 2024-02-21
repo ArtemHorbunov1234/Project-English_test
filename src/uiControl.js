@@ -6,11 +6,11 @@ import {
     btnStartupTimer,
     hintWord,
     controlLanguage,
-    iconActive,
+    topic,
     historyButton,
     ukraine,
     english,
-    iconMode,
+    iconTopic,
 } from './main.js';
 
 export const historyIconWithoutData = document.querySelector('.history__icon__withoutData');
@@ -30,7 +30,7 @@ export let visibilityIconMode;
 
 const iconModeHidden = () => {
     visibilityIconMode = iconTopicSwitch ? 'block' : 'none';
-    iconMode.style.display = `${visibilityIconMode}`;
+    iconTopic.style.display = `${visibilityIconMode}`;
     iconTopicSwitch = !iconTopicSwitch;
 };
 
@@ -54,7 +54,7 @@ const deleteColorTime = () => {
 const hiddenPointerEvents = () => {
     clockTime.style.pointerEvents = 'auto';
     controlLanguage.style.pointerEvents = 'auto';
-    iconActive.style.pointerEvents = 'auto';
+    topic.style.pointerEvents = 'auto';
     historyButton.disabled = false;
     ukraine.style.color = 'black';
     english.style.color = 'black';
