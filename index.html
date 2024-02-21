@@ -5,15 +5,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>English test</title>
         <link rel="icon" type="image/png" href="img/webpages.png" />
-
         <link rel="stylesheet" href="style.css" />
-
         <script type="module" src="src/main.js" defer></script>
     </head>
     <body>
         <div class="window animated-object">
             <button class="window--btn" disabled id="btnStart">Start</button>
-            <img id="iconStartLoading" width="40px" height="40px" src="/img/ZZ5H.gif" alt="" />
+            <img id="iconStartLoading" width="40px" height="40px" src="/img/loading.gif" alt="loading" />
 
             <div class="container" id="activeContainer">
                 <div class="container__timer">
@@ -27,7 +25,6 @@
                         alt=""
                     />
                 </div>
-
                 <div class="container__navigation">
                     <h1 id="topic">
                         Тема: <img src="/img/icon-plan.png" width="20px" height="20px" alt="plan" />
@@ -48,16 +45,16 @@
                     </h2>
                     <div class="counter">
                         <div class="counter__top">
-                            <img class="container__img" src="img/good.png" alt="" />
+                            <img class="container__img" src="img/good.png" alt="good" />
                             <b id="countGoodReply">0</b>
-                            <img src="/img/bad.png" class="container__img" alt="" />
+                            <img src="/img/bad.png" class="container__img" alt="bad" />
                             <b id="countBabReply">0</b>
                         </div>
                         <div>
                             <button id="historyButton" disabled="true">History</button>
                             <div id="historyIcon">
                                 <div class="history__icon__withoutData">
-                                    <img width="70px" height="70px" src="/img/icon-sad.png" alt="" />
+                                    <img width="70px" height="70px" src="/img/icon-sad.png" alt="sad" />
 
                                     <h3>Поки що у вас немає даних щодо статистики та відповідей.</h3>
                                 </div>
@@ -78,7 +75,7 @@
                                                 Kombo: кількість послідовних відповідей:
                                                 <b id="countCombo">0</b>
                                             </h4>
-                                            <img width="23px" height="20px" src="/img/icon-fire.png" alt="" />
+                                            <img width="23px" height="20px" src="/img/icon-fire.png" alt="fire" />
                                         </div>
                                     </div>
                                     <h4>Відповіді</h4>
@@ -89,10 +86,13 @@
                                         </div>
                                         <b>№</b>
                                         <span>моє слово</span
-                                        ><img width="20px" src="/img/icon-right-arrow.png" alt="" /><span>повинно</span
-                                        ><img width="20px" src="/img/icon-equal-mathematical-sign.png" alt="" /><span>
-                                            переклад</span
-                                        >
+                                        ><img width="20px" src="/img/icon-right-arrow.png" alt="right arrow" /><span
+                                            >повинно</span
+                                        ><img
+                                            width="20px"
+                                            src="/img/icon-equal-mathematical-sign.png"
+                                            alt="equality"
+                                        /><span> переклад</span>
                                     </div>
                                     <div id="iconAddTeg"></div>
                                     <div class="history__icon__bottom">
@@ -114,9 +114,9 @@
                 <h4 id="response">вірна відповід</h4>
                 <hr />
                 <div class="container__menu">
-                    <img id="btnMenu" src="/img/icon-back-button.png" alt="" />
+                    <img id="btnMenu" src="/img/icon-back-button.png" alt="menu" />
                     <div class="container__menu__widgets">
-                        <img id="hintWord" src="/img/icon-tips.png" alt="" />
+                        <img id="hintWord" src="/img/icon-tips.png" alt="hint" />
 
                         <div class="container__menu__clock">
                             <img
@@ -140,11 +140,11 @@
                     <div class="container__statsTimer__top">
                         <div class="container__statsTimer__answer-counter">
                             <div>
-                                <img width="34px" src="/img/good.png" alt="" />
+                                <img width="34px" src="/img/good.png" alt="good" />
                                 <h3 id="statsCountGood">0</h3>
                             </div>
                             <div>
-                                <img width="34px" src="/img/bad.png" alt="" />
+                                <img width="34px" src="/img/bad.png" alt="bad" />
                                 <h3 id="statsCountBad">0</h3>
                             </div>
                         </div>

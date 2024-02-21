@@ -470,6 +470,14 @@ hr {
     height: 33px;
 }
 
+#hintWord:hover {
+    animation: widgetsIn 1.7s ease-in-out forwards;
+}
+
+#clockTime:hover {
+    animation: widgetsIn 1.7s ease-in-out forwards;
+}
+
 #hintBottom {
     font-family: monospace;
     font-size: 1.8rem;
@@ -592,5 +600,20 @@ hr {
     to {
         opacity: 1;
         transform: translate(0px, 0px);
+    }
+}
+
+@keyframes widgetsIn {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(20deg);
+    }
+    70% {
+        transform: rotate(-20deg);
+    }
+    100% {
+        transform: rotate(0deg);
     }
 }
