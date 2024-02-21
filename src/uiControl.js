@@ -83,11 +83,11 @@ const clockTimeHidden = () => {
 
 const tegLiLast = function (value_1, value_2, nomination, name) {
     const tegLi = `
-    <img width="18px" style="margin-left: 14px" src="/img/${name}.png" alt="" />
+    <img width="18px" style="margin-left: 14px" src="img/${name}.png" alt="" />
     <b id="icon_nomination">${nomination}.</b><span>${myInput.value}</span>
-    <img width="20px" src="/img/icon-right-arrow.png" alt="" />
+    <img width="20px" src="img/icon-right-arrow.png" alt="" />
     <span>${value_1}</span>
-    <img width="20px" src="/img/icon-equal-mathematical-sign.png" alt="" />
+    <img width="20px" src="img/icon-equal-mathematical-sign.png" alt="" />
     <span >${value_2}</span>`;
     localStorage.setItem(`'${nomination}'`, tegLi);
     return tegLi;
