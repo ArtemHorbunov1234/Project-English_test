@@ -106,6 +106,12 @@ btnStart.onclick = function () {
     }
 };
 
+myInput.addEventListener('keypress', function (event) {
+    if (event.key === 'Enter') {
+        btnStartPush.click();
+    }
+});
+
 btnMenu.onclick = function () {
     let visibilityIconWidgets = stateIconWidgets ? 'flex' : 'none';
     menuWidgets.style.display = `${visibilityIconWidgets}`;
@@ -221,7 +227,6 @@ btnStartPush.onclick = function () {
             );
             iconAddTeg.appendChild(liLast);
         }
-
         randomNumber = randomInteger(1, 100);
         text.innerText = dataFetch[databaseSelection][randomNumber].word;
     } else {
@@ -273,16 +278,18 @@ btnStartPush.onclick = function () {
 
         randomNumber = randomInteger(1, 100);
         text.innerText = dataFetch[databaseSelection][randomNumber].translation;
-        resetHint();
     }
+    resetHint();
     historyIconHidden();
     btnStartPush.disabled = true;
 
     if (timerIndex === 0) {
         setTimeout(() => {
-            response.style.opacity = '0';
             btnStartPush.disabled = false;
-        }, 4500);
+        }, 1000);
+        setTimeout(() => {
+            response.style.opacity = '0';
+        }, 1500);
     } else {
         sumStatsCountHint += statsCountHint;
         statsCountHint = 0;
