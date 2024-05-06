@@ -96,7 +96,7 @@ historyIconHidden();
 btnStart.onclick = function () {
     btnStart.style.display = 'none';
     activeContainer.style.display = 'flex';
-    randomNumber = randomInteger(1, 100);
+    randomNumber = randomInteger(1, 99);
     text.innerText = dataFetch[0][randomNumber].translation;
     for (let a = 0; a <= numGood + numBad; a++) {
         const liLast = document.createElement('li');
@@ -176,7 +176,7 @@ controlLanguage.onclick = function () {
 };
 
 imgAmendText.onclick = function () {
-    randomNumber = randomInteger(1, 100);
+    randomNumber = randomInteger(1, 99);
     lengthCalculation = 0;
     if (stateLanguage === true) text.innerText = dataFetch[databaseSelection][randomNumber].word;
     else text.innerText = dataFetch[databaseSelection][randomNumber].translation;
@@ -227,7 +227,7 @@ btnStartPush.onclick = function () {
             );
             iconAddTeg.appendChild(liLast);
         }
-        randomNumber = randomInteger(1, 100);
+        randomNumber = randomInteger(1, 99);
         text.innerText = dataFetch[databaseSelection][randomNumber].word;
     } else {
         if (myInput.value === dataFetch[databaseSelection][randomNumber].word) {
@@ -276,7 +276,7 @@ btnStartPush.onclick = function () {
             iconAddTeg.appendChild(liLast);
         }
 
-        randomNumber = randomInteger(1, 100);
+        randomNumber = randomInteger(1, 99);
         text.innerText = dataFetch[databaseSelection][randomNumber].translation;
     }
     resetHint();
